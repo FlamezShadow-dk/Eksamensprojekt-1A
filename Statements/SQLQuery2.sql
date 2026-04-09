@@ -10,13 +10,13 @@ GO
 CREATE TABLE COMPONENT(
 	ComponentName NVARCHAR(50) PRIMARY KEY,
 	AmountPerMachine INT NOT NULL,
-	Amount INT NOT NULL
+	AmountInStock INT NOT NULL
 );
 GO
 
 CREATE TABLE SCREW(
-	RingClipSize INT NOT NULL,
-	Amount INT NOT NULL
+	RingClipSize INT PRIMARY KEY,
+	AmountInStock INT NOT NULL
 );
 GO
 
