@@ -8,4 +8,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Update="UILayer\MachineWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UILayer\ScrewWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UILayer\RentalWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+	<Compile Update="UILayer\ComponentWindow.xaml.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Update="UILayer\MainWindow.xaml.cs">
+	  <SubType>Code</SubType>
+	</Compile>  
+  </ItemGroup>
+
 </Project>
