@@ -13,11 +13,11 @@ using System.Windows.Shapes;
 namespace SnapPexOverview.UILayer
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for RentalWindow.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class RentalWindow : Window
     {
-        public Window1()
+        public RentalWindow()
         {
             InitializeComponent();
         }

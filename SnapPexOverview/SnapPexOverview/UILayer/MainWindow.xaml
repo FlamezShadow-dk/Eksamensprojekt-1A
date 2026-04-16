@@ -6,7 +6,21 @@
         xmlns:local="clr-namespace:SnapPexOverview.UILayer"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ControlTemplate x:Key="RoundedButton" TargetType="{x:Type Button}">
+            <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" Direction="270" ShadowDepth="3" BlurRadius="6" Opacity="0.8"/>
+                </Border.Effect>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
-        
+        <Button Template="{DynamicResource RoundedButton}" Content="Komponenter" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top" Height="85" Width="250" FontSize="36" BorderBrush="{x:Null}" Background="#FFDC7171" FontWeight="Bold"/>
+        <Button Template="{DynamicResource RoundedButton}" Content="Maskiner" HorizontalAlignment="Right" Margin="0,90,100,0" VerticalAlignment="Top" Height="85" Width="250" FontSize="36" BorderBrush="{x:Null}" Background="#FF71DC74" FontWeight="Bold"/>
+        <Button Template="{DynamicResource RoundedButton}" Content="Udlejning" HorizontalAlignment="Left" Margin="100,0,0,91" VerticalAlignment="Bottom" Height="85" Width="250" FontSize="36" BorderBrush="{x:Null}" Background="#FF71B1DC" FontWeight="Bold"/>
+        <Button Template="{DynamicResource RoundedButton}" Content="Skruer" HorizontalAlignment="Right" Margin="0,0,100,91" VerticalAlignment="Bottom" Height="85" Width="250" FontSize="36" BorderBrush="{x:Null}" Background="#FFCF71DC" FontWeight="Bold"/>
+
     </Grid>
 </Window>

@@ -13,21 +13,13 @@ using System.Windows.Shapes;
 namespace SnapPexOverview.UILayer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ComponentWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ComponentWindow : Window
     {
-        MainViewModel mvm = new MainViewModel();
-
-        public MainWindow()
+        public ComponentWindow()
         {
             InitializeComponent();
-            this.DataContext = mvm;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

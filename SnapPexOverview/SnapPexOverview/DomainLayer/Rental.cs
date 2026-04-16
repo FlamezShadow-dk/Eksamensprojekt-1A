@@ -10,7 +10,7 @@ namespace SnapPexOverview.DomainLayer
 
         public static void StartDate()
         {
-            DateOnly startDate = default; // DateOnly might not work; supposedly unavailable for .NET framework
+            DateOnly startDate = default;
         }
 
         public static void EndDate()

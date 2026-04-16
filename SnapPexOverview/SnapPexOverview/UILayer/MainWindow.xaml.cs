@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SnapPexOverview.ApplicationLayer;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -13,13 +14,21 @@ using System.Windows.Shapes;
 namespace SnapPexOverview.UILayer
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class MainWindow : Window
     {
-        public Window1()
+        MainViewModel mvm = new MainViewModel();
+
+        public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = mvm;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
