@@ -30,5 +30,10 @@ namespace SnapPexOverview.UILayer
         {
 
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
