@@ -6,5 +6,6 @@ namespace SnapPexOverview.PersistenceLayer
 {
     public class ComponentRepository
     {
+
     }
 }
