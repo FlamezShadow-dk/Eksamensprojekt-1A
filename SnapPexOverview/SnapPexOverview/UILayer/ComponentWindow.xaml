@@ -12,5 +12,9 @@
         <Button Content="Godkend" Margin="0,0,25,25" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="125" FontSize="24" BorderBrush="#FF569047" Background="#FF9DE28A" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold"/>
         <TextBox Margin="25,25,25,389" TextWrapping="Wrap" BorderBrush="Gainsboro" Background="#FFB3B3B3" Text="Søg efter komponent"/>
         <Rectangle HorizontalAlignment="Left" Height="150" Margin="25,259,0,0" VerticalAlignment="Top" Width="575" Fill="Gainsboro"/>
+        <Label Content="Komponent" HorizontalAlignment="Left" Margin="38,276,0,0" VerticalAlignment="Top"/>
+        <Label Content="Antal på Lager" HorizontalAlignment="Left" Margin="38,307,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="38,359,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>
