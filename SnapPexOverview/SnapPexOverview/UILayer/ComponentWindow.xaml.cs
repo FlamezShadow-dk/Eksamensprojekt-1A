@@ -1,6 +1,4 @@
 ﻿using SnapPexOverview.ApplicationLayer;
-using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,26 +7,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SnapPexOverview.UILayer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ComponentWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ComponentWindow : Window
     {
-        MainViewModel mvm = new MainViewModel();
-
-        public MainWindow()
+        public ComponentWindow()
         {
             InitializeComponent();
-            this.DataContext = mvm;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
