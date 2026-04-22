@@ -4,7 +4,8 @@ using System.Text;
 
 namespace SnapPexOverview.ApplicationLayer
 {
-    public class MainViewModel
+    public class MainViewModel : BaseViewModel
     {
+
     }
 }
