@@ -50,6 +50,14 @@ namespace SnapPexOverview.PersistenceLayer
             return components;
         }
 
+        public Component CreateComponent(string NewComponentName, int NewAmountPermachine, int NewAmountInStock)
+        {
+            Component component = new Component();
+            component.ComponentName = NewComponentName;
+            component.AmountPerMachine = NewAmountPermachine;
+            component.AmountInStock = NewAmountInStock;
+            return component;
+        }
 
     }
 }
