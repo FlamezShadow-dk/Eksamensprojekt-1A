@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Input;
 
 namespace SnapPexOverview.ApplicationLayer
 {
@@ -20,6 +21,27 @@ namespace SnapPexOverview.ApplicationLayer
             set { _components = value; OnPropertyChanged(); }
         }
 
+        private string _newComponentName;
+        public string NewComponentName
+        {
+            get => _newComponentName;
+            set { _newComponentName = value; OnPropertyChanged(); }
+        }
+
+        private int _newAmountPerMachine;
+        public int NewAmountPerMachine
+        {
+            get => _newAmountPerMachine;
+            set { _newAmountPerMachine = value; OnPropertyChanged(); }
+        }
+        private int _newAmountInStock;
+        public int NewAmountInStock
+        {
+            get => _newAmountInStock;
+            set { _newAmountInStock = value; OnPropertyChanged(); }
+        }
+        public ICommand AddComponentCommand { get; }
+
         public MainViewModel()
         {
             // instantiate repository (dependency)
@@ -29,5 +51,13 @@ namespace SnapPexOverview.ApplicationLayer
             foreach (Component component in _componentRepo.GetAll())
                 Components.Add(new ComponentViewModel(component));
         }
+
+        public void AddComponent()
+        {
+            Component comp = _componentRepo.CreateComponent(NewComponentName, NewAmountPerMachine, NewAmountInStock );
+            Components.Add(new ComponentViewModel(comp));
+        }
+
+
     }
 }
