@@ -1,4 +1,6 @@
 ﻿using SnapPexOverview.ApplicationLayer;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +9,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SnapPexOverview.UILayer
@@ -23,6 +24,16 @@ namespace SnapPexOverview.UILayer
         {
             InitializeComponent();
             this.DataContext = mvm;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
