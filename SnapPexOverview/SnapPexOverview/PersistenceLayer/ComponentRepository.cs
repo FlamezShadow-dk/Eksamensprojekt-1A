@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using SnapPexOverview.DomainLayer;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Text;
 
 namespace SnapPexOverview.PersistenceLayer
 {
@@ -48,6 +48,45 @@ namespace SnapPexOverview.PersistenceLayer
                 }
             }
             return components;
+        }
+
+        public Component GetByName(string name)
+        {
+            Component result = null;
+
+            using (SqlConnection con = CreateConnection())
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM COMPONENT WHERE ComponentName = @name", con))
+            {
+                cmd.Parameters.AddWithValue("@name", name);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Component comp = new Component();
+
+                        comp.ComponentName = reader["ComponentName"].ToString();
+                        comp.AmountPerMachine = (int)reader["AmountPerMachine"];
+                        comp.AmountInStock = (int)reader["AmountInStock"];
+                        result = comp;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public void Update(Component component)
+        {
+            using (SqlConnection con = CreateConnection())
+            using (SqlCommand cmd = new SqlCommand("UPDATE COMPONENT SET " +
+                "AmountPerMachine = @AmountPerMachine," +
+                "AmountInStock = @AmountInStock " +
+                "WHERE ComponentName = @name;", con))
+            {
+                cmd.Parameters.AddWithValue("@AmountPerMachine", component.AmountPerMachine);
+                cmd.Parameters.AddWithValue("@AmountInStock", component.AmountInStock);
+                cmd.Parameters.AddWithValue("@name", component.ComponentName);
+                cmd.ExecuteNonQuery();
+            }
         }
 
         //public Component CreateComponent(string NewComponentName, int NewAmountPermachine, int NewAmountInStock)

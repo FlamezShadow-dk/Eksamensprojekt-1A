@@ -21,13 +21,21 @@ namespace SnapPexOverview.ApplicationLayer.Commands
         public void Execute(object? parameter)
         {
             AddComponentWindow window = new AddComponentWindow();
+
+            // populates the ExistingComponentNames in the dialogwindow
+            window.ExistingComponentNames = mvm.Components
+                .Select(c => c.ComponentName)
+                .ToList();
+
+            window.DataContext = window;
+
             if (window.ShowDialog() == true)
             {
                 // validates input so it doesnt crash if someone types "abc"
                 if (int.TryParse(window.AmountPerMachine, out int perMachine) &&
                     int.TryParse(window.AmountInStock, out int inStock))
                 {
-                    mvm.AddComponent(window.ComponentName, perMachine, inStock);
+                    mvm.AddOrUpdateComponent(window.ComponentName, perMachine, inStock);
                 }
             }
         }
