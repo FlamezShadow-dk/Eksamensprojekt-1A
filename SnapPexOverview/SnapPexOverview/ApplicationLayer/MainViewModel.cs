@@ -1,4 +1,5 @@
-﻿using SnapPexOverview.DomainLayer;
+﻿using SnapPexOverview.ApplicationLayer.Commands;
+using SnapPexOverview.DomainLayer;
 using SnapPexOverview.PersistenceLayer;
 using System;
 using System.Collections;
@@ -50,6 +51,9 @@ namespace SnapPexOverview.ApplicationLayer
             // populate observable collection and wrap domain objects
             foreach (Component component in _componentRepo.GetAll())
                 Components.Add(new ComponentViewModel(component));
+
+            // instantiate commands
+            AddComponentCommand = new AddComponentCommand(this);
         }
 
         public void AddComponent()
