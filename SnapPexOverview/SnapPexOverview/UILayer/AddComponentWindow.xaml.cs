@@ -22,6 +22,9 @@ namespace SnapPexOverview.UILayer
         public string AmountPerMachine { get; set; }
         public string AmountInStock { get; set; }
 
+        // component name list
+        public List<string> ExistingComponentNames { get; set; }
+
         public AddComponentWindow()
         {
             InitializeComponent();

@@ -26,10 +26,12 @@
                    Grid.Column="0"
                    Margin="0,5"
                    VerticalAlignment="Center"/>
-        <TextBox Grid.Row="0"
-                 Grid.Column="1"
-                 Margin="10"
-                 Text="{Binding ComponentName}"/>
+        <ComboBox Grid.Row="0"
+                  Grid.Column="1"
+                  Margin="10"
+				  IsEditable="True"
+				  ItemsSource="{Binding ExistingComponentNames}"
+                  Text="{Binding ComponentName, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Text="Antal pr maskine:"
                    Grid.Row="1"

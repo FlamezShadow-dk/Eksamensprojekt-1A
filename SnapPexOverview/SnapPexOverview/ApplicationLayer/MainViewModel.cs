@@ -37,18 +37,39 @@ namespace SnapPexOverview.ApplicationLayer
             OpenAddComponentWindowCommand = new OpenAddComponentWindowCommand(this);
         }
 
-        public void AddComponent(string name, int perMachine, int inStock)
+        // adds new component row if they dont exist, and updates existing ones.
+        public void AddOrUpdateComponent(string name, int perMachine, int inStock)
         {
-            Component comp = new Component
-            {
-                ComponentName = name,
-                AmountPerMachine = perMachine,
-                AmountInStock = inStock
-            };
+            // checks db for component
+            Component existing = _componentRepo.GetByName(name);
+            // try find matching viewmodel in UI list (returns null if not found)
+            ComponentViewModel vm = Components.FirstOrDefault(c => c.ComponentName == name);
 
-            // add it to database & wrap it
-            _componentRepo.Add(comp);
-            Components.Add(new ComponentViewModel(comp));
+            if (existing != null)
+            {
+                //updates perMachine and inStock if component already added
+                existing.AmountPerMachine = perMachine;
+                existing.AmountInStock += inStock;
+                _componentRepo.Update(existing);
+
+                if (vm != null)
+                {
+                    vm.AmountInStock += existing.AmountPerMachine;
+                    vm.AmountPerMachine = existing.AmountInStock;
+                }
+            }
+            else
+            {
+                Component comp = new Component
+                {
+                    ComponentName = name,
+                    AmountPerMachine = perMachine,
+                    AmountInStock = inStock
+                };
+                // add it to database & wrap it
+                _componentRepo.Add(comp);
+                Components.Add(new ComponentViewModel(comp));
+            }
         }
     }
 }
