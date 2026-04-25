@@ -22,26 +22,7 @@ namespace SnapPexOverview.ApplicationLayer
             set { _components = value; OnPropertyChanged(); }
         }
 
-        private string _newComponentName;
-        public string NewComponentName
-        {
-            get => _newComponentName;
-            set { _newComponentName = value; OnPropertyChanged(); }
-        }
-
-        private int _newAmountPerMachine;
-        public int NewAmountPerMachine
-        {
-            get => _newAmountPerMachine;
-            set { _newAmountPerMachine = value; OnPropertyChanged(); }
-        }
-        private int _newAmountInStock;
-        public int NewAmountInStock
-        {
-            get => _newAmountInStock;
-            set { _newAmountInStock = value; OnPropertyChanged(); }
-        }
-        public ICommand AddComponentCommand { get; }
+        public ICommand OpenAddComponentWindowCommand { get; }
 
         public MainViewModel()
         {
@@ -53,15 +34,21 @@ namespace SnapPexOverview.ApplicationLayer
                 Components.Add(new ComponentViewModel(component));
 
             // instantiate commands
-            AddComponentCommand = new AddComponentCommand(this);
+            OpenAddComponentWindowCommand = new OpenAddComponentWindowCommand(this);
         }
 
-        public void AddComponent()
+        public void AddComponent(string name, int perMachine, int inStock)
         {
-            Component comp = _componentRepo.CreateComponent(NewComponentName, NewAmountPerMachine, NewAmountInStock );
+            Component comp = new Component
+            {
+                ComponentName = name,
+                AmountPerMachine = perMachine,
+                AmountInStock = inStock
+            };
+
+            // add it to database & wrap it
+            _componentRepo.Add(comp);
             Components.Add(new ComponentViewModel(comp));
         }
-
-
     }
 }
