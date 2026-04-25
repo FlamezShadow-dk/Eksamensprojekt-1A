@@ -1,4 +1,5 @@
-﻿using SnapPexOverview.DomainLayer;
+﻿using SnapPexOverview.ApplicationLayer.Commands;
+using SnapPexOverview.DomainLayer;
 using SnapPexOverview.PersistenceLayer;
 using System;
 using System.Collections;
@@ -21,26 +22,7 @@ namespace SnapPexOverview.ApplicationLayer
             set { _components = value; OnPropertyChanged(); }
         }
 
-        private string _newComponentName;
-        public string NewComponentName
-        {
-            get => _newComponentName;
-            set { _newComponentName = value; OnPropertyChanged(); }
-        }
-
-        private int _newAmountPerMachine;
-        public int NewAmountPerMachine
-        {
-            get => _newAmountPerMachine;
-            set { _newAmountPerMachine = value; OnPropertyChanged(); }
-        }
-        private int _newAmountInStock;
-        public int NewAmountInStock
-        {
-            get => _newAmountInStock;
-            set { _newAmountInStock = value; OnPropertyChanged(); }
-        }
-        public ICommand AddComponentCommand { get; }
+        public ICommand OpenAddComponentWindowCommand { get; }
 
         public MainViewModel()
         {
@@ -50,14 +32,23 @@ namespace SnapPexOverview.ApplicationLayer
             // populate observable collection and wrap domain objects
             foreach (Component component in _componentRepo.GetAll())
                 Components.Add(new ComponentViewModel(component));
+
+            // instantiate commands
+            OpenAddComponentWindowCommand = new OpenAddComponentWindowCommand(this);
         }
 
-        public void AddComponent()
+        public void AddComponent(string name, int perMachine, int inStock)
         {
-            Component comp = _componentRepo.CreateComponent(NewComponentName, NewAmountPerMachine, NewAmountInStock );
+            Component comp = new Component
+            {
+                ComponentName = name,
+                AmountPerMachine = perMachine,
+                AmountInStock = inStock
+            };
+
+            // add it to database & wrap it
+            _componentRepo.Add(comp);
             Components.Add(new ComponentViewModel(comp));
         }
-
-
     }
 }

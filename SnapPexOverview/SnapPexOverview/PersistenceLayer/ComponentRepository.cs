@@ -40,9 +40,9 @@ namespace SnapPexOverview.PersistenceLayer
                     while (reader.Read())
                     {
                         Component component = new Component();
-                        component.ComponentName = reader["@ComponentName"].ToString();
-                        component.AmountPerMachine = (int)reader["@AmountPerMachine"];
-                        component.AmountInStock = (int)reader["@AmountInStock"];
+                        component.ComponentName = reader["ComponentName"].ToString();
+                        component.AmountPerMachine = (int)reader["AmountPerMachine"];
+                        component.AmountInStock = (int)reader["AmountInStock"];
                         components.Add(component);
                     }
                 }
@@ -50,14 +50,14 @@ namespace SnapPexOverview.PersistenceLayer
             return components;
         }
 
-        public Component CreateComponent(string NewComponentName, int NewAmountPermachine, int NewAmountInStock)
-        {
-            Component component = new Component();
-            component.ComponentName = NewComponentName;
-            component.AmountPerMachine = NewAmountPermachine;
-            component.AmountInStock = NewAmountInStock;
-            return component;
-        }
+        //public Component CreateComponent(string NewComponentName, int NewAmountPermachine, int NewAmountInStock)
+        //{
+        //    Component component = new Component();
+        //    component.ComponentName = NewComponentName;
+        //    component.AmountPerMachine = NewAmountPermachine;
+        //    component.AmountInStock = NewAmountInStock;
+        //    return component;
+        //}
 
     }
 }
