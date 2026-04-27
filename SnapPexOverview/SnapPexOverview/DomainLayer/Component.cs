@@ -12,5 +12,6 @@ namespace SnapPexOverview.DomainLayer
 
         public int AmountInStock { get; set; }
 
+        public Component() { }
     }
 }
