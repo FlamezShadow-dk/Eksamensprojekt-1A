@@ -54,8 +54,8 @@ namespace SnapPexOverview.ApplicationLayer
 
                 if (vm != null)
                 {
-                    vm.AmountInStock += existing.AmountPerMachine;
-                    vm.AmountPerMachine = existing.AmountInStock;
+                    vm.AmountInStock = existing.AmountInStock;
+                    vm.AmountPerMachine = existing.AmountPerMachine;
                 }
             }
             else
