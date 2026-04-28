@@ -61,7 +61,7 @@
                 IsDefault="True"
                 Click="OnSaveClick"/>
 
-        <Button Content="Annuler"
+        <Button Content="Annuller"
                 Grid.Row="3"
                 Width="60"
                 IsCancel="True"/>
