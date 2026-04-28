@@ -35,6 +35,7 @@ namespace SnapPexOverview.ApplicationLayer
         {
             // instantiate repository (dependency)
             _componentRepo = new ComponentRepository();
+            _machineRepo = new MachineRepository();
 
             // populate observable collection and wrap domain objects
             foreach (Component component in _componentRepo.GetAll())
