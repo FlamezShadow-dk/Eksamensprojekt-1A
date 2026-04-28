@@ -13,6 +13,7 @@ namespace SnapPexOverview.ApplicationLayer
     {
         // repository references
         private readonly ComponentRepository _componentRepo;
+        private readonly MachineRepository _machineRepo;
 
         // observable collection for inotify
         private ObservableCollection<ComponentViewModel> _components = new();
@@ -21,7 +22,13 @@ namespace SnapPexOverview.ApplicationLayer
             get => _components;
             set { _components = value; OnPropertyChanged(); }
         }
-
+        private ObservableCollection<MachineViewModel> _machines = new();
+        public ObservableCollection<MachineViewModel> Machines
+        {
+            get => _machines;
+            set { _machines = value; OnPropertyChanged(); }
+        }
+        
         public ICommand OpenAddComponentWindowCommand { get; }
 
         public MainViewModel()
@@ -71,5 +78,16 @@ namespace SnapPexOverview.ApplicationLayer
                 Components.Add(new ComponentViewModel(comp));
             }
         }
+
+        public void AddMachine(int nr, int stat)
+        {
+            Machine mac = new Machine(nr)
+            {
+                Status = (MachineStatus)stat
+            };
+            _machineRepo.Add(mac);
+            Machines.Add(new MachineViewModel(mac));
+        }
+
     }
 }
