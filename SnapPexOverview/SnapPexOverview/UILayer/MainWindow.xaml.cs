@@ -1,4 +1,5 @@
-﻿using SnapPexOverview.ApplicationLayer;
+﻿using Microsoft.Win32;
+using SnapPexOverview.ApplicationLayer;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,17 @@ namespace SnapPexOverview.UILayer
         {
             InitializeComponent();
             this.DataContext = mvm;
+
+            // Automatically load default/placeholder image on startup
+            try
+            {
+                var uri = new Uri("/UILayer/ComponentImages/placeholder.png", UriKind.Absolute);
+                img.Source = new BitmapImage(uri);
+            }
+            catch (Exception)
+            {
+                // ignore failures to load the default image
+            }   
         }
     }
 }
