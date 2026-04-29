@@ -35,7 +35,7 @@ namespace SnapPexOverview.ApplicationLayer.Commands
                 if (int.TryParse(window.AmountPerMachine, out int perMachine) &&
                     int.TryParse(window.AmountInStock, out int inStock))
                 {
-                    mvm.AddOrUpdateComponent(window.ComponentName, perMachine, inStock);
+                    mvm.AddOrUpdateComponent(window.ComponentName, perMachine, inStock, window.ImagePath);
                 }
             }
         }

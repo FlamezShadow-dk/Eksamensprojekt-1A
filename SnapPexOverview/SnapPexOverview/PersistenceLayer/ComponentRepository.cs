@@ -25,6 +25,7 @@ namespace SnapPexOverview.PersistenceLayer
                 cmd.Parameters.AddWithValue("@ComponentName", component.ComponentName);
                 cmd.Parameters.AddWithValue("@AmountPerMachine", component.AmountPerMachine);
                 cmd.Parameters.AddWithValue("@AmountInStock", component.AmountInStock);
+                cmd.Parameters.AddWithValue("@ImagePath", component.ImagePath);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -43,6 +44,7 @@ namespace SnapPexOverview.PersistenceLayer
                         component.ComponentName = reader["ComponentName"].ToString();
                         component.AmountPerMachine = (int)reader["AmountPerMachine"];
                         component.AmountInStock = (int)reader["AmountInStock"];
+                        component.ImagePath = reader["ImagePath"].ToString();
                         components.Add(component);
                     }
                 }
@@ -67,6 +69,7 @@ namespace SnapPexOverview.PersistenceLayer
                         comp.ComponentName = reader["ComponentName"].ToString();
                         comp.AmountPerMachine = (int)reader["AmountPerMachine"];
                         comp.AmountInStock = (int)reader["AmountInStock"];
+                        comp.ImagePath = reader["ImagePath"].ToString();
                         result = comp;
                     }
                 }
@@ -79,12 +82,14 @@ namespace SnapPexOverview.PersistenceLayer
             using (SqlConnection con = CreateConnection())
             using (SqlCommand cmd = new SqlCommand("UPDATE COMPONENT SET " +
                 "AmountPerMachine = @AmountPerMachine," +
-                "AmountInStock = @AmountInStock " +
+                "AmountInStock = @AmountInStock, " +
+                "ImagePath = @ImagePath " +
                 "WHERE ComponentName = @name;", con))
             {
                 cmd.Parameters.AddWithValue("@AmountPerMachine", component.AmountPerMachine);
                 cmd.Parameters.AddWithValue("@AmountInStock", component.AmountInStock);
                 cmd.Parameters.AddWithValue("@name", component.ComponentName);
+                cmd.Parameters.AddWithValue("@ImagePath", component.ImagePath);
                 cmd.ExecuteNonQuery();
             }
         }

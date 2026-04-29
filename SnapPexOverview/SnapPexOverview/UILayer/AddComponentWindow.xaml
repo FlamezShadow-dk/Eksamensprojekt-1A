@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -21,12 +22,29 @@
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Navn:"
-                   Grid.Row="0"
+        <!--image-->
+        <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10">
+
+            <Image Source="{Binding ImagePath}"
+                   Width="120"
+                   Height="120"/>
+
+            <Button Content="Vælg Billede"
+                    Width="120"
+                    Click="OnChooseImageClick"
+                />
+
+        </StackPanel>
+
+            <TextBlock Text="Navn:"
+                   Grid.Row="1"
                    Grid.Column="0"
                    Margin="0,5"
                    VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="0"
+        <ComboBox Grid.Row="1"
                   Grid.Column="1"
                   Margin="10"
 				  IsEditable="True"
@@ -34,16 +52,6 @@
                   Text="{Binding ComponentName, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Text="Antal pr maskine:"
-                   Grid.Row="1"
-                   Grid.Column="0"
-                   Margin="0,5"
-                   VerticalAlignment="Center"/>
-        <TextBox Grid.Row="1"
-                 Grid.Column="1"
-                 Margin="10"
-                 Text="{Binding AmountPerMachine}"/>
-
-        <TextBlock Text="Antal på lager:"
                    Grid.Row="2"
                    Grid.Column="0"
                    Margin="0,5"
@@ -51,18 +59,28 @@
         <TextBox Grid.Row="2"
                  Grid.Column="1"
                  Margin="10"
+                 Text="{Binding AmountPerMachine}"/>
+
+        <TextBlock Text="Antal på lager:"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   Margin="0,5"
+                   VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3"
+                 Grid.Column="1"
+                 Margin="10"
                  Text="{Binding AmountInStock}"/>
         
         
         <Button Content="Gem"
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="1" 
                 Width="60"
                 IsDefault="True"
                 Click="OnSaveClick"/>
 
         <Button Content="Annuller"
-                Grid.Row="3"
+                Grid.Row="4"
                 Width="60"
                 IsCancel="True"/>
 

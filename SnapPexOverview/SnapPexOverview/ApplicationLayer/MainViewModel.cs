@@ -36,9 +36,8 @@ namespace SnapPexOverview.ApplicationLayer
             // instantiate commands
             OpenAddComponentWindowCommand = new OpenAddComponentWindowCommand(this);
         }
-
-        // adds new component row if they dont exist, and updates existing ones.
-        public void AddOrUpdateComponent(string name, int perMachine, int inStock)
+        
+        public void AddOrUpdateComponent(string name, int perMachine, int inStock, string imagePath)
         {
             // checks db for component
             Component existing = _componentRepo.GetByName(name);
@@ -50,12 +49,23 @@ namespace SnapPexOverview.ApplicationLayer
                 //updates perMachine and inStock if component already added
                 existing.AmountPerMachine = perMachine;
                 existing.AmountInStock += inStock;
+
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    existing.ImagePath = imagePath;
+                }
+
                 _componentRepo.Update(existing);
 
                 if (vm != null)
                 {
                     vm.AmountInStock = existing.AmountInStock;
                     vm.AmountPerMachine = existing.AmountPerMachine;
+
+                    if (!string.IsNullOrEmpty(imagePath))
+                    {
+                        vm.ImagePath = imagePath;
+                    }
                 }
             }
             else
@@ -64,7 +74,8 @@ namespace SnapPexOverview.ApplicationLayer
                 {
                     ComponentName = name,
                     AmountPerMachine = perMachine,
-                    AmountInStock = inStock
+                    AmountInStock = inStock,
+                    ImagePath = imagePath
                 };
                 // add it to database & wrap it
                 _componentRepo.Add(comp);
