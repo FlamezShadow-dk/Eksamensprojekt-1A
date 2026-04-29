@@ -10,7 +10,8 @@ GO
 CREATE TABLE COMPONENT(
 	ComponentName NVARCHAR(50) PRIMARY KEY,
 	AmountPerMachine INT NOT NULL,
-	AmountInStock INT NOT NULL
+	AmountInStock INT NOT NULL,
+	ImagePath NVARCHAR(255)
 );
 GO
 
