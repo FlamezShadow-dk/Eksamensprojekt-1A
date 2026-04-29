@@ -67,11 +67,11 @@ namespace SnapPexOverview.PersistenceLayer
                 {
                     if (reader.Read())
                     {
-                        Machine mac = new Machine(machineNr);
+                        int nr = Convert.ToInt32(reader["MachineNr"]);
+                        Machine machine = new Machine(nr);
 
-                        mac.MachineNr = (int)reader["MachineNr"];
-                        mac.Status = (MachineStatus)(int)reader["MachineStatus"];
-                        result = mac;
+                        machine.Status = (MachineStatus)(int)reader["MachineStatus"];
+                        result = machine;
                     }
                 }
             }
