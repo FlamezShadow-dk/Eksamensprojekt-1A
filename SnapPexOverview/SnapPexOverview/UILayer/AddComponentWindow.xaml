@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnapPexOverview.UILayer"
         mc:Ignorable="d"
-        Title="AddComponentWindow" Height="450" Width="800">
+        Title="AddComponentWindow" Height="400" Width="400">
     <Grid Margin="20"
           VerticalAlignment="Center"
           HorizontalAlignment="Center">
@@ -27,11 +27,13 @@
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Center"
                     Margin="0,0,0,10">
-
+            
+            <Border Background="#FFDFDFDF">
             <Image Source="{Binding ImagePath}"
                    Width="120"
                    Height="120"/>
-
+            </Border>
+            
             <Button Content="Vælg Billede"
                     Width="120"
                     Click="OnChooseImageClick"
@@ -72,19 +74,20 @@
                  Grid.Column="1"
                  Margin="10"
                  Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged}"/>
-        
-        
+
+        <Button Content="Annuller"
+                Grid.Row="4"
+                Width="60"
+                IsCancel="True" 
+                Background="#FFE09595"/>
+
         <Button Content="Gem"
                 Grid.Row="4"
                 Grid.Column="1" 
                 Width="60"
                 IsDefault="True"
-                Click="OnSaveClick"/>
-
-        <Button Content="Annuller"
-                Grid.Row="4"
-                Width="60"
-                IsCancel="True"/>
+                Click="OnSaveClick"
+                Background="#FFA9E095"/>
 
     </Grid>
 </Window>

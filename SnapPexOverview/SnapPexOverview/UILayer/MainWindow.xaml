@@ -21,7 +21,7 @@
                     <ListView ItemsSource="{Binding Components}" Margin="0,20,0,70" Foreground="Black" BorderBrush="{x:Null}" Background="#FFEDEDED">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Komponent" Width="300">
+                                <GridViewColumn Header="Komponent" Width="400">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -35,13 +35,44 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Antal på Lager" DisplayMemberBinding="{Binding AmountInStock}" Width="150" />
-                                <GridViewColumn Header="Antal pr Maskine" DisplayMemberBinding="{Binding AmountPerMachine}" Width="150" />
+                                <GridViewColumn 
+                                       Header="Antal pr Maskine" 
+                                       DisplayMemberBinding="{Binding AmountPerMachine}" 
+                                       Width="150" />
+                                <GridViewColumn 
+                                       Header="Antal på Lager" 
+                                       DisplayMemberBinding="{Binding AmountInStock}" 
+                                       Width="150" />
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Content="Godkend" Margin="0,0,10,10" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="125" FontSize="24" BorderBrush="#FF569047" Background="#FF9DE28A" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}"/>
-                    <Button Content="Tilføj Ny" Command="{Binding OpenAddComponentWindowCommand}" Margin="10,0,0,10" Height="50" VerticalAlignment="Bottom" FontSize="24" BorderBrush="#FF476B90" Background="#FF8AB2E2" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}" HorizontalAlignment="Left" Width="125"/>
+                    <Button 
+                        Content="Godkend" 
+                        Margin="0,0,10,10" 
+                        Height="50" 
+                        VerticalAlignment="Bottom" 
+                        HorizontalAlignment="Right" 
+                        Width="125" 
+                        FontSize="24" 
+                        BorderBrush="#FF569047" 
+                        Background="#FF9DE28A" 
+                        Grid.IsSharedSizeScope="True" 
+                        FontFamily="Segoe UI Semibold" 
+                        Template="{DynamicResource RoundedButton}"/>
+                    <Button 
+                        Content="Tilføj Ny" 
+                        Command="{Binding OpenAddComponentWindowCommand}" 
+                        Margin="10,0,0,10" 
+                        Height="50" 
+                        VerticalAlignment="Bottom" 
+                        FontSize="24" 
+                        BorderBrush="#FF476B90" 
+                        Background="#FF8AB2E2" 
+                        Grid.IsSharedSizeScope="True" 
+                        FontFamily="Segoe UI Semibold" 
+                        Template="{DynamicResource RoundedButton}" 
+                        HorizontalAlignment="Left" 
+                        Width="125"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Maskine" Background="#FF71DC74">
@@ -62,18 +93,17 @@
             </TabItem>
             <TabItem Header="Udlejning" Background="#FF71B1DC">
                 <Grid>
-                    <Button Content="Godkend" Margin="0,0,10,10" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="125" FontSize="24" BorderBrush="#FF569047" Background="#FF9DE28A" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="379*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Godkend" Margin="0,0,10,10" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="125" FontSize="24" BorderBrush="#FF569047" Background="#FF9DE28A" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Skruer" Background="#FFCF71DC">
                 <Grid>
                     <Label Content="Tilføj Nye Skruer" Margin="262,45,262,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
                     <Button Content="Godkend" Margin="0,0,10,10" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="125" FontSize="24" BorderBrush="#FF569047" Background="#FF9DE28A" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}"/>
-                    <Image x:Name="img" HorizontalAlignment="Left" Height="100" Margin="135,120,0,0" VerticalAlignment="Top" Width="100">
-                        <Image.Source>
-                            <BitmapImage DecodePixelWidth="100" UriSource="/UILayer/ComponentImages/placeholder.png"/>
-                        </Image.Source>
-                    </Image>
                     <CheckBox x:Name="_16mmCheck" Margin="145,130,575,0" VerticalAlignment="Top"/>
                     <CheckBox x:Name="_18mmCheck"  Margin="575,130,145,0" VerticalAlignment="Top"/>
                     <Label Content="16mm Hoved" HorizontalAlignment="Left" Margin="135,220,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold"/>
