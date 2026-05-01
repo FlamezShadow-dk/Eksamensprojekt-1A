@@ -82,5 +82,90 @@ namespace SnapPexOverview.ApplicationLayer
                 Components.Add(new ComponentViewModel(comp));
             }
         }
+
+        // removed after demo
+        
+        
+        private ComponentViewModel _selectedComponent;
+        public ComponentViewModel SelectedComponent
+        {
+            get => _selectedComponent;
+            set
+            {
+                if (_selectedComponent != value)
+                {
+                    _selectedComponent = value;
+                    OnPropertyChanged();
+
+                    if (value != null)
+                    {
+                        ComponentName = value.ComponentName;
+                        
+                        AmountPerMachine = value.AmountPerMachine;
+
+                        AmountInStock = value.AmountInStock;
+
+                        ImagePath = value.ImagePath;
+                    }
+                }
+            }
+        }
+
+        private string _componentName;
+        public string ComponentName
+        {
+            get => _componentName;
+            set
+            {
+                if (_componentName != value)
+                {
+                    _componentName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _amountInStock;
+        public int AmountInStock
+        {
+            get => _amountInStock;
+            set
+            {
+                if (_amountInStock != value)
+                {
+                    _amountInStock = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _amountPerMachine;
+        public int AmountPerMachine
+        {
+            get => _amountPerMachine;
+            set
+            {
+                if (_amountPerMachine != value)
+                {
+                    _amountPerMachine = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _imagePath;
+        public string ImagePath
+        {
+            get => _imagePath;
+            set
+            {
+                if (_imagePath != value)
+                {
+                    _imagePath = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
     }
+
 }

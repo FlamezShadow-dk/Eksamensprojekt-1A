@@ -48,7 +48,9 @@
                   Grid.Column="1"
                   Margin="10"
 				  IsEditable="True"
-				  ItemsSource="{Binding ExistingComponentNames}"
+				  ItemsSource="{Binding Components}"
+                  SelectedItem="{Binding SelectedComponent}"
+                  DisplayMemberPath="ComponentName"
                   Text="{Binding ComponentName, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Text="Antal pr maskine:"
@@ -59,7 +61,7 @@
         <TextBox Grid.Row="2"
                  Grid.Column="1"
                  Margin="10"
-                 Text="{Binding AmountPerMachine}"/>
+                 Text="{Binding AmountPerMachine, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Text="Antal på lager:"
                    Grid.Row="3"
@@ -69,7 +71,7 @@
         <TextBox Grid.Row="3"
                  Grid.Column="1"
                  Margin="10"
-                 Text="{Binding AmountInStock}"/>
+                 Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged}"/>
         
         
         <Button Content="Gem"

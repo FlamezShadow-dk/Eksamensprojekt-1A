@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using SnapPexOverview.ApplicationLayer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,19 +21,10 @@ namespace SnapPexOverview.UILayer
     /// </summary>
     public partial class AddComponentWindow : Window
     {
-        // input fields data of dialog window
-        public string ComponentName { get; set; }
-        public string AmountPerMachine { get; set; }
-        public string AmountInStock { get; set; }
-        public string ImagePath { get; set; }
-
-        // component name list
-        public List<string> ExistingComponentNames { get; set; }
 
         public AddComponentWindow()
         {
             InitializeComponent();
-            DataContext = this;
         }
 
         private void OnSaveClick(object sender, RoutedEventArgs e)
@@ -43,17 +35,20 @@ namespace SnapPexOverview.UILayer
         // always png files, not jpg etc..
         private void OnChooseImageClick(object sender, RoutedEventArgs e)
         {
+            var vm = DataContext as MainViewModel;
+            if (vm == null) return;
+            
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == true)
             {
-                if (string.IsNullOrWhiteSpace(ComponentName))
+                if (string.IsNullOrWhiteSpace(vm.ComponentName))
                 {
                     MessageBox.Show("Indtast navn før du vælger billede.");
                     return;
                 }
 
                 string extension = Path.GetExtension(ofd.FileName); // finds image type (png, jpeg etc)
-                string fileName = ComponentName + extension; //name of component image
+                string fileName = vm.ComponentName + extension; //name of component image
 
                 string imagesFolder = Path.Combine(
                     Directory.GetCurrentDirectory(),
@@ -65,10 +60,7 @@ namespace SnapPexOverview.UILayer
 
                 File.Copy(ofd.FileName, savePath, true);
 
-                ImagePath = savePath;
-
-                DataContext = null;
-                DataContext = this;
+                vm.ImagePath = savePath;
             }
         }
     }
