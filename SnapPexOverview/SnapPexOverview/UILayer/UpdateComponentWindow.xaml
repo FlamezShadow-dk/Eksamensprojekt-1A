@@ -15,6 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -27,13 +28,13 @@
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Center"
                     Margin="0,0,0,10">
-            
+
             <Border Background="#FFDFDFDF">
-            <Image Source="{Binding ImagePath}"
+                <Image Source="{Binding ImagePath}"
                    Width="120"
                    Height="120"/>
             </Border>
-            
+
             <Button Content="Vælg Billede"
                     Width="120"
                     Click="OnChooseImageClick"
@@ -41,7 +42,7 @@
 
         </StackPanel>
 
-            <TextBlock Text="Navn:"
+        <TextBlock Text="Navn:"
                    Grid.Row="1"
                    Grid.Column="0"
                    Margin="0,5"
@@ -53,7 +54,7 @@
 				  ItemsSource="{Binding Components}"
                   SelectedItem="{Binding SelectedComponent}"
                   DisplayMemberPath="ComponentName"
-                  Text="{Binding ComponentName, UpdateSourceTrigger=PropertyChanged}"/>
+                  Text="{Binding ComponentName, UpdateSourceTrigger=PropertyChanged}" Background="#FFF0F0F0"/>
 
         <TextBlock Text="Antal pr maskine:"
                    Grid.Row="2"
@@ -65,7 +66,7 @@
                  Margin="10"
                  Text="{Binding AmountPerMachine, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <TextBlock Text="Antal på lager:"
+        <TextBlock Text="Antal på lager nu:"
                    Grid.Row="3"
                    Grid.Column="0"
                    Margin="0,5"
@@ -73,16 +74,35 @@
         <TextBox Grid.Row="3"
                  Grid.Column="1"
                  Margin="10"
-                 Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged}" 
+                 IsReadOnly="True" 
+                 Focusable="False" Background="#FFE0E0E0"/>
+
+        <TextBlock Text="Antal der tilføjes:"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   Margin="0,5"
+                   VerticalAlignment="Center"/>
+        <TextBlock Text="+"
+                   Grid.Row="4"
+                   Grid.Column="1"
+                   Margin="10,10,125,10"
+                   TextAlignment="Center"/>
+        <!-- prevent following from updating automatically when AmountInStock changes -->
+        <TextBox Grid.Row="4"
+                 Grid.Column="1"
+                 Margin="25, 10, 10, 10"
+                 Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged}"
+                 Background="White"/>
 
         <Button Content="Annuller"
-                Grid.Row="4"
+                Grid.Row="5"
                 Width="60"
                 IsCancel="True" 
                 Background="#FFE09595"/>
 
         <Button Content="Gem"
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="1" 
                 Width="60"
                 IsDefault="True"
