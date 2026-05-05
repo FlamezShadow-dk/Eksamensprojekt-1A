@@ -24,6 +24,8 @@ namespace SnapPexOverview.ApplicationLayer
 
         public ICommand OpenAddComponentWindowCommand { get; }
 
+        public ICommand OpenUpdateComponentWindowCommand { get; }
+
         public MainViewModel()
         {
             // instantiate repository (dependency)
@@ -35,6 +37,8 @@ namespace SnapPexOverview.ApplicationLayer
 
             // instantiate commands
             OpenAddComponentWindowCommand = new OpenAddComponentWindowCommand(this);
+
+            OpenUpdateComponentWindowCommand = new OpenUpdateComponentWindowCommand(this);
         }
         
         public void AddOrUpdateComponent(string name, int perMachine, int inStock, string imagePath)

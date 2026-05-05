@@ -1,0 +1,93 @@
+﻿<Window x:Class="SnapPexOverview.UILayer.UpdateComponentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SnapPexOverview.UILayer"
+        mc:Ignorable="d"
+        Title="UpdateComponentWindow" Height="400" Width="400">
+    <Grid Margin="20"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+
+        <!--image-->
+        <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10">
+            
+            <Border Background="#FFDFDFDF">
+            <Image Source="{Binding ImagePath}"
+                   Width="120"
+                   Height="120"/>
+            </Border>
+            
+            <Button Content="Vælg Billede"
+                    Width="120"
+                    Click="OnChooseImageClick"
+                />
+
+        </StackPanel>
+
+            <TextBlock Text="Navn:"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="0,5"
+                   VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="10"
+				  IsEditable="False"
+				  ItemsSource="{Binding Components}"
+                  SelectedItem="{Binding SelectedComponent}"
+                  DisplayMemberPath="ComponentName"
+                  Text="{Binding ComponentName, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Text="Antal pr maskine:"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Margin="0,5"
+                   VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2"
+                 Grid.Column="1"
+                 Margin="10"
+                 Text="{Binding AmountPerMachine, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Text="Antal på lager:"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   Margin="0,5"
+                   VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3"
+                 Grid.Column="1"
+                 Margin="10"
+                 Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Button Content="Annuller"
+                Grid.Row="4"
+                Width="60"
+                IsCancel="True" 
+                Background="#FFE09595"/>
+
+        <Button Content="Gem"
+                Grid.Row="4"
+                Grid.Column="1" 
+                Width="60"
+                IsDefault="True"
+                Click="OnSaveClick"
+                Background="#FFA9E095"/>
+
+    </Grid>
+</Window>

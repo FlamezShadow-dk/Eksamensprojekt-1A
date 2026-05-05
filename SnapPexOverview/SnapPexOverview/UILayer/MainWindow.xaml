@@ -47,32 +47,33 @@
                         </ListView.View>
                     </ListView>
                     <Button 
-                        Content="Godkend" 
+                        Content="Opdater Komponent"
+                        Command="{Binding OpenUpdateComponentWindowCommand}"
                         Margin="0,0,10,10" 
                         Height="50" 
                         VerticalAlignment="Bottom" 
                         HorizontalAlignment="Right" 
-                        Width="125" 
-                        FontSize="24" 
+                        Width="200" 
+                        FontSize="20" 
                         BorderBrush="#FF569047" 
                         Background="#FF9DE28A" 
                         Grid.IsSharedSizeScope="True" 
                         FontFamily="Segoe UI Semibold" 
                         Template="{DynamicResource RoundedButton}"/>
                     <Button 
-                        Content="Tilføj Ny" 
+                        Content="Tilføj Ny Komponent" 
                         Command="{Binding OpenAddComponentWindowCommand}" 
                         Margin="10,0,0,10" 
                         Height="50" 
                         VerticalAlignment="Bottom" 
-                        FontSize="24" 
+                        FontSize="20" 
                         BorderBrush="#FF476B90" 
                         Background="#FF8AB2E2" 
                         Grid.IsSharedSizeScope="True" 
                         FontFamily="Segoe UI Semibold" 
                         Template="{DynamicResource RoundedButton}" 
                         HorizontalAlignment="Left" 
-                        Width="125"/>
+                        Width="200"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Maskine" Background="#FF71DC74">
