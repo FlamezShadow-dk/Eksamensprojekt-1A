@@ -16,12 +16,12 @@ END;
 GO
 
 CREATE PROCEDURE spInsertMachine
-	@MachineNr INT,
 	@MachineStatus INT
 AS
 BEGIN
-	INSERT INTO MACHINE(MachineNr, MachineStatus)
-	VALUES(@MachineNr, @MachineStatus)
+	INSERT INTO MACHINE(MachineStatus)
+	VALUES(@MachineStatus)
+	SELECT SCOPE_IDENTITY()
 END
 
 

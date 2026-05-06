@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SnapPexOverview.ApplicationLayer
@@ -13,6 +14,7 @@ namespace SnapPexOverview.ApplicationLayer
     {
         // repository references
         private readonly ComponentRepository _componentRepo;
+        private readonly MachineRepository _machineRepo;
 
         // observable collection for inotify
         private ObservableCollection<ComponentViewModel> _components = new();
@@ -22,23 +24,37 @@ namespace SnapPexOverview.ApplicationLayer
             set { _components = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<MachineViewModel> _machines = new();
+        public ObservableCollection<MachineViewModel> Machines
+        {
+            get => _machines;
+            set { _machines = value; OnPropertyChanged(); }
+        }
+
         public ICommand OpenAddComponentWindowCommand { get; }
 
         public ICommand OpenUpdateComponentWindowCommand { get; }
+
+        public ICommand OpenProduceMachineWindowCommand { get; }
 
         public MainViewModel()
         {
             // instantiate repository (dependency)
             _componentRepo = new ComponentRepository();
+            _machineRepo = new MachineRepository();
 
             // populate observable collection and wrap domain objects
             foreach (Component component in _componentRepo.GetAll())
                 Components.Add(new ComponentViewModel(component));
+            foreach (Machine machine in _machineRepo.GetAll())
+                Machines.Add(new MachineViewModel(machine));
 
             // instantiate commands
             OpenAddComponentWindowCommand = new OpenAddComponentWindowCommand(this);
 
             OpenUpdateComponentWindowCommand = new OpenUpdateComponentWindowCommand(this);
+
+            OpenProduceMachineWindowCommand = new OpenProduceMachineWindowCommand(this);
         }
         
         public void AddOrUpdateComponent(string name, int perMachine, int inStock, string imagePath)
@@ -88,8 +104,6 @@ namespace SnapPexOverview.ApplicationLayer
         }
 
         // removed after demo
-        
-        
         private ComponentViewModel _selectedComponent;
         public ComponentViewModel SelectedComponent
         {
@@ -170,6 +184,66 @@ namespace SnapPexOverview.ApplicationLayer
                 }
             }
         }
+
+        // machine stuff
+        public void ProduceMachines(int amount)
+        {
+            foreach (ComponentViewModel comp in Components)
+            {
+                // validation
+                int required = comp.AmountPerMachine * amount;
+                if (comp.AmountInStock < required)
+                {
+                    MessageBox.Show(
+                        $"Ikke nok antal af {comp.ComponentName}",
+                        "Production Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+            }
+
+            foreach (ComponentViewModel comp in Components)
+            {
+                // update viewmodel
+                comp.AmountInStock -= comp.AmountPerMachine * amount;
+
+                // db update
+                Component updated = new Component
+                {
+                    ComponentName = comp.ComponentName,
+                    AmountPerMachine = comp.AmountPerMachine,
+                    AmountInStock = comp.AmountInStock,
+                    ImagePath = comp.ImagePath
+                };
+                _componentRepo.Update(updated);
+            }
+
+            // create machine
+            for (int i = 0; i < amount; i++)
+            {
+                Machine machine = new Machine(0)
+                {
+                    Status = MachineStatus.InStock
+                };
+
+                int newMachineNr = _machineRepo.Add(machine);
+                machine.MachineNr = newMachineNr;
+                Machines.Add(new MachineViewModel(machine));
+            }
+        }
+
+        private int _machineAmountToProduce;
+        public int MachineAmountToProduce
+        {
+            get => _machineAmountToProduce;
+            set
+            {
+                _machineAmountToProduce = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 
 }

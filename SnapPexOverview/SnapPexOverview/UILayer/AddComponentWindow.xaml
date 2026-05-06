@@ -46,14 +46,10 @@
                    Grid.Column="0"
                    Margin="0,5"
                    VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="1"
+        <TextBox Grid.Row="1"
                   Grid.Column="1"
                   Margin="10"
-				  IsEditable="True"
-				  ItemsSource="{Binding Components}"
-                  SelectedItem="{Binding SelectedComponent}"
-                  DisplayMemberPath="ComponentName"
-                  Text="{Binding ComponentName, UpdateSourceTrigger=PropertyChanged}"/>
+                  Text="{Binding ComponentName}"/>
 
         <TextBlock Text="Antal pr maskine:"
                    Grid.Row="2"
@@ -63,7 +59,7 @@
         <TextBox Grid.Row="2"
                  Grid.Column="1"
                  Margin="10"
-                 Text="{Binding AmountPerMachine, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding AmountPerMachine}"/>
 
         <TextBlock Text="Antal på lager:"
                    Grid.Row="3"
@@ -73,7 +69,7 @@
         <TextBox Grid.Row="3"
                  Grid.Column="1"
                  Margin="10"
-                 Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding AmountInStock}"/>
 
         <Button Content="Annuller"
                 Grid.Row="4"

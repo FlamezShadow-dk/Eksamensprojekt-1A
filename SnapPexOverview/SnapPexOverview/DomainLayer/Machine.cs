@@ -6,9 +6,9 @@ namespace SnapPexOverview.DomainLayer
 {
     public enum MachineStatus
     {
-        Lager,
-        Udlejet,
-        Reparation
+        InStock,
+        RentedOut,
+        Repair
     }
 
     public class Machine
