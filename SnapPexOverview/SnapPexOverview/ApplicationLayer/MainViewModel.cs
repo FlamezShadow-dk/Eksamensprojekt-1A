@@ -216,19 +216,25 @@ namespace SnapPexOverview.ApplicationLayer
         // machine stuff
         public void ProduceMachines(int amount)
         {
+            string compNames = "";
             foreach (ComponentViewModel comp in Components)
             {
                 // validation
                 int required = comp.AmountPerMachine * amount;
                 if (comp.AmountInStock < required)
                 {
-                    MessageBox.Show(
-                        $"Ikke nok antal af {comp.ComponentName}",
+                    compNames += $"{comp.ComponentName}\n\n";
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(compNames))
+            {
+                MessageBox.Show(
+                        $"Ikke nok antal af:\n{compNames}",
                         "Production Error",
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning);
-                    return;
-                }
+                return;
             }
 
             foreach (ComponentViewModel comp in Components)
