@@ -29,7 +29,6 @@ namespace SnapPexOverview.ApplicationLayer.Commands
                 mvm.UpdateComponent(
                         mvm.ComponentName,
                         mvm.AmountPerMachine,
-                        mvm.AmountInStock,
                         mvm.ImagePath);
             }
         }

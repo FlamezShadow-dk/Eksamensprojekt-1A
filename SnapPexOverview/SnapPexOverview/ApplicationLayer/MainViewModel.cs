@@ -57,7 +57,7 @@ namespace SnapPexOverview.ApplicationLayer
             OpenProduceMachineWindowCommand = new OpenProduceMachineWindowCommand(this);
         }
         
-        public void UpdateComponent(string name, int perMachine, int inStock, string imagePath)
+        public void UpdateComponent(string name, int perMachine, string imagePath)
         {
             // checks db for component
             Component existing = _componentRepo.GetByName(name);
@@ -68,7 +68,7 @@ namespace SnapPexOverview.ApplicationLayer
             {
                 //updates perMachine and inStock if component already added
                 existing.AmountPerMachine = perMachine;
-                existing.AmountInStock += inStock;
+                existing.AmountInStock += AmountToAdd;
 
                 if (!string.IsNullOrEmpty(imagePath))
                 {
@@ -199,6 +199,17 @@ namespace SnapPexOverview.ApplicationLayer
                     _imagePath = value;
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        private int _amountToAdd = 0;
+        public int AmountToAdd
+        {
+            get => _amountToAdd;
+            set
+            {
+                _amountToAdd = value;
+                OnPropertyChanged();
             }
         }
 

@@ -92,7 +92,7 @@
         <TextBox Grid.Row="4"
                  Grid.Column="1"
                  Margin="25, 10, 10, 10"
-                 Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding AmountToAdd, UpdateSourceTrigger=PropertyChanged}"
                  Background="White"/>
 
         <Button Content="Annuller"
