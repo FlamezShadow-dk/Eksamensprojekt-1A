@@ -57,7 +57,7 @@ namespace SnapPexOverview.ApplicationLayer
             OpenProduceMachineWindowCommand = new OpenProduceMachineWindowCommand(this);
         }
         
-        public void AddOrUpdateComponent(string name, int perMachine, int inStock, string imagePath)
+        public void UpdateComponent(string name, int perMachine, int inStock, string imagePath)
         {
             // checks db for component
             Component existing = _componentRepo.GetByName(name);
@@ -88,6 +88,22 @@ namespace SnapPexOverview.ApplicationLayer
                     }
                 }
             }
+        }
+
+        public void AddComponent(string name, int perMachine, int inStock, string imagePath)
+        {
+            // checks db for component
+            Component existing = _componentRepo.GetByName(name);
+
+            if (existing != null)
+            {
+                MessageBox.Show(
+                        $"Komponent: {existing.ComponentName} eksistere allerede",
+                        "Component Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                return;
+            }
             else
             {
                 Component comp = new Component
@@ -102,6 +118,7 @@ namespace SnapPexOverview.ApplicationLayer
                 Components.Add(new ComponentViewModel(comp));
             }
         }
+
 
         // removed after demo
         private ComponentViewModel _selectedComponent;
