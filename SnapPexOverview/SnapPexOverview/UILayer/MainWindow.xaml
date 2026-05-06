@@ -18,7 +18,7 @@
             <TabItem Header="Komponent" BorderBrush="{x:Null}" Background="#FFDC7171">
                 <Grid>
                     <TextBox x:Name="ComponentSearch" TextWrapping="Wrap" BorderBrush="#FFB3B3B3" Background="#FFB3B3B3" Text="Søg efter komponent" SelectionOpacity="1" Height="19" VerticalAlignment="Top"/>
-                    <ListView ItemsSource="{Binding Components}" Margin="0,20,0,70" Foreground="Black" BorderBrush="{x:Null}" Background="#FFEDEDED">
+                    <ListView ItemsSource="{Binding Components}" SelectedItem="{Binding SelectedComponent}" Margin="0,20,0,70" Foreground="Black" BorderBrush="{x:Null}" Background="#FFEDEDED">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Komponent" Width="400">
