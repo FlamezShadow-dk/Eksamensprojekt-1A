@@ -223,14 +223,14 @@ namespace SnapPexOverview.ApplicationLayer
                 int required = comp.AmountPerMachine * amount;
                 if (comp.AmountInStock < required)
                 {
-                    compNames += $"{comp.ComponentName}\n\n";
+                    compNames += $"{comp.ComponentName}\n";
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(compNames))
             {
                 MessageBox.Show(
-                        $"Ikke nok antal af:\n{compNames}",
+                        $"Ikke nok antal af:\n\n{compNames}",
                         "Production Error",
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning);
