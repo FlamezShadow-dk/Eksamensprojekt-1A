@@ -6,12 +6,12 @@ using System.Windows.Input;
 
 namespace SnapPexOverview.ApplicationLayer.Commands
 {
-    public class OpenAddComponentWindowCommand : ICommand
+    public class OpenProduceMachineWindowCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         private readonly MainViewModel mvm;
 
-        public OpenAddComponentWindowCommand(MainViewModel mainViewModel)
+        public OpenProduceMachineWindowCommand(MainViewModel mainViewModel)
         {
             mvm = mainViewModel;
         }
@@ -20,17 +20,12 @@ namespace SnapPexOverview.ApplicationLayer.Commands
 
         public void Execute(object? parameter)
         {
-            AddComponentWindow window = new AddComponentWindow();
-
+            ProduceMachineWindow window = new ProduceMachineWindow();
             window.DataContext = mvm;
 
             if (window.ShowDialog() == true)
             {
-                mvm.AddOrUpdateComponent(
-                        mvm.ComponentName,
-                        mvm.AmountPerMachine,
-                        mvm.AmountInStock,
-                        mvm.ImagePath);
+                mvm.ProduceMachines(mvm.MachineAmountToProduce);
             }
         }
     }

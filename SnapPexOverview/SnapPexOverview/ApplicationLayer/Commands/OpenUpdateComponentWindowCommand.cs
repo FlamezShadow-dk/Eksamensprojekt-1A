@@ -6,12 +6,12 @@ using System.Windows.Input;
 
 namespace SnapPexOverview.ApplicationLayer.Commands
 {
-    public class OpenAddComponentWindowCommand : ICommand
+    public class OpenUpdateComponentWindowCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         private readonly MainViewModel mvm;
 
-        public OpenAddComponentWindowCommand(MainViewModel mainViewModel)
+        public OpenUpdateComponentWindowCommand(MainViewModel mainViewModel)
         {
             mvm = mainViewModel;
         }
@@ -20,7 +20,7 @@ namespace SnapPexOverview.ApplicationLayer.Commands
 
         public void Execute(object? parameter)
         {
-            AddComponentWindow window = new AddComponentWindow();
+            UpdateComponentWindow window = new UpdateComponentWindow();
 
             window.DataContext = mvm;
 

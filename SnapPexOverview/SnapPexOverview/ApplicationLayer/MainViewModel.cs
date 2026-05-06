@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SnapPexOverview.ApplicationLayer
@@ -22,14 +23,19 @@ namespace SnapPexOverview.ApplicationLayer
             get => _components;
             set { _components = value; OnPropertyChanged(); }
         }
+
         private ObservableCollection<MachineViewModel> _machines = new();
         public ObservableCollection<MachineViewModel> Machines
         {
             get => _machines;
             set { _machines = value; OnPropertyChanged(); }
         }
-        
+
         public ICommand OpenAddComponentWindowCommand { get; }
+
+        public ICommand OpenUpdateComponentWindowCommand { get; }
+
+        public ICommand OpenProduceMachineWindowCommand { get; }
 
         public MainViewModel()
         {
@@ -40,13 +46,18 @@ namespace SnapPexOverview.ApplicationLayer
             // populate observable collection and wrap domain objects
             foreach (Component component in _componentRepo.GetAll())
                 Components.Add(new ComponentViewModel(component));
+            foreach (Machine machine in _machineRepo.GetAll())
+                Machines.Add(new MachineViewModel(machine));
 
             // instantiate commands
             OpenAddComponentWindowCommand = new OpenAddComponentWindowCommand(this);
-        }
 
-        // adds new component row if they dont exist, and updates existing ones.
-        public void AddOrUpdateComponent(string name, int perMachine, int inStock)
+            OpenUpdateComponentWindowCommand = new OpenUpdateComponentWindowCommand(this);
+
+            OpenProduceMachineWindowCommand = new OpenProduceMachineWindowCommand(this);
+        }
+        
+        public void AddOrUpdateComponent(string name, int perMachine, int inStock, string imagePath)
         {
             // checks db for component
             Component existing = _componentRepo.GetByName(name);
@@ -58,12 +69,23 @@ namespace SnapPexOverview.ApplicationLayer
                 //updates perMachine and inStock if component already added
                 existing.AmountPerMachine = perMachine;
                 existing.AmountInStock += inStock;
+
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    existing.ImagePath = imagePath;
+                }
+
                 _componentRepo.Update(existing);
 
                 if (vm != null)
                 {
                     vm.AmountInStock = existing.AmountInStock;
                     vm.AmountPerMachine = existing.AmountPerMachine;
+
+                    if (!string.IsNullOrEmpty(imagePath))
+                    {
+                        vm.ImagePath = imagePath;
+                    }
                 }
             }
             else
@@ -72,7 +94,8 @@ namespace SnapPexOverview.ApplicationLayer
                 {
                     ComponentName = name,
                     AmountPerMachine = perMachine,
-                    AmountInStock = inStock
+                    AmountInStock = inStock,
+                    ImagePath = imagePath
                 };
                 // add it to database & wrap it
                 _componentRepo.Add(comp);
@@ -80,15 +103,147 @@ namespace SnapPexOverview.ApplicationLayer
             }
         }
 
-        public void AddMachine(int nr, int stat)
+        // removed after demo
+        private ComponentViewModel _selectedComponent;
+        public ComponentViewModel SelectedComponent
         {
-            Machine mac = new Machine(nr)
+            get => _selectedComponent;
+            set
             {
-                Status = (MachineStatus)stat
-            };
-            _machineRepo.Add(mac);
-            Machines.Add(new MachineViewModel(mac));
+                if (_selectedComponent != value)
+                {
+                    _selectedComponent = value;
+                    OnPropertyChanged();
+
+                    if (value != null)
+                    {
+                        ComponentName = value.ComponentName;
+                        
+                        AmountPerMachine = value.AmountPerMachine;
+
+                        AmountInStock = value.AmountInStock;
+
+                        ImagePath = value.ImagePath;
+                    }
+                }
+            }
+        }
+
+        private string _componentName;
+        public string ComponentName
+        {
+            get => _componentName;
+            set
+            {
+                if (_componentName != value)
+                {
+                    _componentName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _amountInStock;
+        public int AmountInStock
+        {
+            get => _amountInStock;
+            set
+            {
+                if (_amountInStock != value)
+                {
+                    _amountInStock = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _amountPerMachine;
+        public int AmountPerMachine
+        {
+            get => _amountPerMachine;
+            set
+            {
+                if (_amountPerMachine != value)
+                {
+                    _amountPerMachine = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _imagePath;
+        public string ImagePath
+        {
+            get => _imagePath;
+            set
+            {
+                if (_imagePath != value)
+                {
+                    _imagePath = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // machine stuff
+        public void ProduceMachines(int amount)
+        {
+            foreach (ComponentViewModel comp in Components)
+            {
+                // validation
+                int required = comp.AmountPerMachine * amount;
+                if (comp.AmountInStock < required)
+                {
+                    MessageBox.Show(
+                        $"Ikke nok antal af {comp.ComponentName}",
+                        "Production Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+            }
+
+            foreach (ComponentViewModel comp in Components)
+            {
+                // update viewmodel
+                comp.AmountInStock -= comp.AmountPerMachine * amount;
+
+                // db update
+                Component updated = new Component
+                {
+                    ComponentName = comp.ComponentName,
+                    AmountPerMachine = comp.AmountPerMachine,
+                    AmountInStock = comp.AmountInStock,
+                    ImagePath = comp.ImagePath
+                };
+                _componentRepo.Update(updated);
+            }
+
+            // create machine
+            for (int i = 0; i < amount; i++)
+            {
+                Machine machine = new Machine(0)
+                {
+                    Status = MachineStatus.InStock
+                };
+
+                int newMachineNr = _machineRepo.Add(machine);
+                machine.MachineNr = newMachineNr;
+                Machines.Add(new MachineViewModel(machine));
+            }
+        }
+
+        private int _machineAmountToProduce;
+        public int MachineAmountToProduce
+        {
+            get => _machineAmountToProduce;
+            set
+            {
+                _machineAmountToProduce = value;
+                OnPropertyChanged();
+            }
         }
 
     }
+
 }

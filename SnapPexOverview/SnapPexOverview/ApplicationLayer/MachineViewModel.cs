@@ -8,6 +8,7 @@ namespace SnapPexOverview.ApplicationLayer
     public class MachineViewModel : BaseViewModel
     {
         private readonly Machine _machine;
+
         public int MachineNr
         {
             get => _machine.MachineNr;
@@ -18,15 +19,34 @@ namespace SnapPexOverview.ApplicationLayer
             }
         }
 
-        public int Status
+        public MachineStatus Status
         {
-            get => (int)_machine.Status;
+            get => _machine.Status;
             set
             {
-                _machine.Status = (MachineStatus)value;
+                _machine.Status = value;
                 OnPropertyChanged();
             }
         }
+
+        public string StatusText
+        {
+            get
+            {
+                switch (_machine.Status)
+                {
+                    case MachineStatus.InStock:
+                        return "På Lager";
+                    case MachineStatus.RentedOut:
+                        return "Udlejet";
+                    case MachineStatus.Repair:
+                        return "Reperation";
+                    default:
+                        return "";
+                }
+            }
+        }
+
         public MachineViewModel(Machine machine)
         {
             _machine = machine;

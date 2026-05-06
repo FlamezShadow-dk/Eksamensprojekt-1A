@@ -26,7 +26,7 @@ namespace SnapPexOverview.PersistenceLayer
             using (SqlCommand cmd = new SqlCommand("spInsertMachine", con))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@MachineStatus", machine.Status);
+                cmd.Parameters.AddWithValue("@MachineStatus", (int)machine.Status);
                 result = Convert.ToInt32(cmd.ExecuteScalar());
             }
             return result;
@@ -62,7 +62,7 @@ namespace SnapPexOverview.PersistenceLayer
             using (SqlConnection con = CreateConnection())
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM MACHINE WHERE MachineNr = @MachineNr", con))
             {
-                cmd.Parameters.AddWithValue("@machineNr", machineNr);
+                cmd.Parameters.AddWithValue("@MachineNr", machineNr);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
@@ -85,7 +85,7 @@ namespace SnapPexOverview.PersistenceLayer
                 "MachineStatus = @MachineStatus " +
                 "WHERE MachineNr = @machineNr;", con))
             {
-                cmd.Parameters.AddWithValue("@MachineStatus", machine.Status);
+                cmd.Parameters.AddWithValue("@MachineStatus", (int)machine.Status);
                 cmd.Parameters.AddWithValue("@machineNr", machine.MachineNr);
                 cmd.ExecuteNonQuery();
             }

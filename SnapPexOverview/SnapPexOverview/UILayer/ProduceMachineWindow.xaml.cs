@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-using SnapPexOverview.ApplicationLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -15,16 +13,19 @@ using System.Windows.Shapes;
 namespace SnapPexOverview.UILayer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ProduceMachineWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProduceMachineWindow : Window
     {
-        MainViewModel mvm = new MainViewModel();
-
-        public MainWindow()
+        public ProduceMachineWindow()
         {
             InitializeComponent();
-            this.DataContext = mvm;
+        }
+
+        private void OnProduceClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            Close();
         }
     }
 }

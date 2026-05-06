@@ -5,11 +5,12 @@ GO
 CREATE PROCEDURE spInsertComponent
 	@ComponentName NVARCHAR(50),
 	@AmountPerMachine INT,
-	@AmountInStock INT
+	@AmountInStock INT,
+	@ImagePath NVARCHAR(255)
 AS
 BEGIN
-	INSERT INTO COMPONENT(ComponentName, AmountPerMachine, AmountInStock)
-	VALUES(@ComponentName, @AmountPerMachine, @AmountInStock);
+	INSERT INTO COMPONENT(ComponentName, AmountPerMachine, AmountInStock, ImagePath)
+	VALUES(@ComponentName, @AmountPerMachine, @AmountInStock, @ImagePath);
 END;
 
 GO
@@ -20,6 +21,7 @@ AS
 BEGIN
 	INSERT INTO MACHINE(MachineStatus)
 	VALUES(@MachineStatus)
+	SELECT SCOPE_IDENTITY()
 END
 
 

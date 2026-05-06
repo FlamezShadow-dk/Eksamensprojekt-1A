@@ -39,6 +39,16 @@ namespace SnapPexOverview.ApplicationLayer
             }
         }
 
+        public string ImagePath
+        {
+            get => _component.ImagePath;
+            set
+            {
+                _component.ImagePath = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ComponentViewModel(Component component)
         {
             _component = component;

@@ -17,12 +17,12 @@ using Path = System.IO.Path;
 namespace SnapPexOverview.UILayer
 {
     /// <summary>
-    /// Interaction logic for AddComponentWindow.xaml
+    /// Interaction logic for UpdateComponentWindow.xaml
     /// </summary>
-    public partial class AddComponentWindow : Window
+    public partial class UpdateComponentWindow : Window
     {
 
-        public AddComponentWindow()
+        public UpdateComponentWindow()
         {
             InitializeComponent();
         }
