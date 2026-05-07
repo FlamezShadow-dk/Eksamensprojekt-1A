@@ -11,10 +11,11 @@ ALTER PROCEDURE spInsertComponent
 	@AmountInStock INT,
 	@ImagePath NVARCHAR(255)
 AS
-BEGIN
+BEGINs
 	INSERT INTO COMPONENT(ComponentName, AmountPerMachine, AmountInStock, ImagePath)
 	VALUES(@ComponentName, @AmountPerMachine, @AmountInStock, @ImagePath);
 END
+GO
 
 ALTER PROCEDURE spInsertMachine
 	@MachineStatus INT

@@ -26,10 +26,9 @@ namespace SnapPexOverview.ApplicationLayer.Commands
 
             if (window.ShowDialog() == true)
             {
-                mvm.AddOrUpdateComponent(
+                mvm.UpdateComponent(
                         mvm.ComponentName,
                         mvm.AmountPerMachine,
-                        mvm.AmountInStock,
                         mvm.ImagePath);
             }
         }

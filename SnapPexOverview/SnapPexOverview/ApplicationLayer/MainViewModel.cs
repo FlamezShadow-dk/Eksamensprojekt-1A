@@ -57,7 +57,7 @@ namespace SnapPexOverview.ApplicationLayer
             OpenProduceMachineWindowCommand = new OpenProduceMachineWindowCommand(this);
         }
         
-        public void AddOrUpdateComponent(string name, int perMachine, int inStock, string imagePath)
+        public void UpdateComponent(string name, int perMachine, string imagePath)
         {
             // checks db for component
             Component existing = _componentRepo.GetByName(name);
@@ -68,7 +68,7 @@ namespace SnapPexOverview.ApplicationLayer
             {
                 //updates perMachine and inStock if component already added
                 existing.AmountPerMachine = perMachine;
-                existing.AmountInStock += inStock;
+                existing.AmountInStock += AmountToAdd;
 
                 if (!string.IsNullOrEmpty(imagePath))
                 {
@@ -88,6 +88,22 @@ namespace SnapPexOverview.ApplicationLayer
                     }
                 }
             }
+        }
+
+        public void AddComponent(string name, int perMachine, int inStock, string imagePath)
+        {
+            // checks db for component
+            Component existing = _componentRepo.GetByName(name);
+
+            if (existing != null)
+            {
+                MessageBox.Show(
+                        $"Komponent: {existing.ComponentName} eksistere allerede",
+                        "Component Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                return;
+            }
             else
             {
                 Component comp = new Component
@@ -102,6 +118,7 @@ namespace SnapPexOverview.ApplicationLayer
                 Components.Add(new ComponentViewModel(comp));
             }
         }
+
 
         // removed after demo
         private ComponentViewModel _selectedComponent;
@@ -185,22 +202,39 @@ namespace SnapPexOverview.ApplicationLayer
             }
         }
 
+        private int _amountToAdd = 0;
+        public int AmountToAdd
+        {
+            get => _amountToAdd;
+            set
+            {
+                _amountToAdd = value;
+                OnPropertyChanged();
+            }
+        }
+
         // machine stuff
         public void ProduceMachines(int amount)
         {
+            string compNames = "";
             foreach (ComponentViewModel comp in Components)
             {
                 // validation
                 int required = comp.AmountPerMachine * amount;
                 if (comp.AmountInStock < required)
                 {
-                    MessageBox.Show(
-                        $"Ikke nok antal af {comp.ComponentName}",
+                    compNames += $"{comp.ComponentName}\n";
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(compNames))
+            {
+                MessageBox.Show(
+                        $"Ikke nok antal af:\n\n{compNames}",
                         "Production Error",
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning);
-                    return;
-                }
+                return;
             }
 
             foreach (ComponentViewModel comp in Components)
