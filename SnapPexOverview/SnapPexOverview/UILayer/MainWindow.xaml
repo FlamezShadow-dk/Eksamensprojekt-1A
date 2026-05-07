@@ -17,8 +17,12 @@
         <TabControl Margin="10,10,10,10" BorderBrush="#FF626262">
             <TabItem Header="Komponent" BorderBrush="{x:Null}" Background="#FFDC7171">
                 <Grid>
-                    <TextBox x:Name="ComponentSearch" TextWrapping="Wrap" BorderBrush="#FFB3B3B3" Background="#FFB3B3B3" Text="Søg efter komponent" SelectionOpacity="1" Height="19" VerticalAlignment="Top"/>
-                    <ListView ItemsSource="{Binding Components}" SelectedItem="{Binding SelectedComponent}" Margin="0,20,0,70" Foreground="Black" BorderBrush="{x:Null}" Background="#FFEDEDED">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="56*"/>
+                        <ColumnDefinition Width="331*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="ComponentSearch" TextWrapping="Wrap" BorderBrush="#FFB3B3B3" Background="#FFB3B3B3" Text="Søg efter komponent" SelectionOpacity="1" Height="19" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <ListView ItemsSource="{Binding Components}" SelectedItem="{Binding SelectedComponent}" Margin="0,20,0,70" Foreground="Black" BorderBrush="{x:Null}" Background="#FFEDEDED" Grid.ColumnSpan="2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Komponent" Width="400">
@@ -59,7 +63,7 @@
                         Background="#FF9DE28A" 
                         Grid.IsSharedSizeScope="True" 
                         FontFamily="Segoe UI Semibold" 
-                        Template="{DynamicResource RoundedButton}"/>
+                        Template="{DynamicResource RoundedButton}" Grid.Column="1"/>
                     <Button 
                         Content="Tilføj Ny Komponent" 
                         Command="{Binding OpenAddComponentWindowCommand}" 
@@ -73,23 +77,28 @@
                         FontFamily="Segoe UI Semibold" 
                         Template="{DynamicResource RoundedButton}" 
                         HorizontalAlignment="Left" 
-                        Width="200"/>
+                        Width="200" Grid.ColumnSpan="2"/>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Maskine" Background="#FF71DC74">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="47*"/>
+                        <ColumnDefinition Width="727*"/>
+                    </Grid.ColumnDefinitions>
                     <TextBox Text="Søg maskine"
                              Height="19"
                              VerticalAlignment="Top"
                              BorderBrush="#FFB3B3B3"
-                             Background="#FFB3B3B3"/>
-                    
+                             Background="#FFB3B3B3" Grid.ColumnSpan="2"/>
+
                     <ListView ItemsSource="{Binding Machines}"
                               Margin="0,20,0,70"
                               Foreground="Black"
                               BorderBrush="Transparent"
-                              Background="#FFEDEDED">
-                        
+                              Background="#FFEDEDED" Grid.ColumnSpan="2">
+
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Maskin Nr"
@@ -101,8 +110,35 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Content="Godkend" Margin="0,0,10,10" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="125" FontSize="24" BorderBrush="#FF569047" Background="#FF9DE28A" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}"/>
-                    <Button Content="Tilføj Ny" Command="{Binding OpenProduceMachineWindowCommand}" Margin="10,0,0,10" Height="50" VerticalAlignment="Bottom" FontSize="24" BorderBrush="#FF476B90" Background="#FF8AB2E2" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}" HorizontalAlignment="Left" Width="125"/>
+                    <Button 
+                        Content="Opdater Status" 
+                        Margin="0,0,10,10" 
+                        Height="50" 
+                        VerticalAlignment="Bottom" 
+                        HorizontalAlignment="Right" 
+                        Width="200" FontSize="20" 
+                        BorderBrush="#FF569047"
+                        Background="#FF9DE28A" 
+                        Grid.IsSharedSizeScope="True" 
+                        FontFamily="Segoe UI Semibold" 
+                        Template="{DynamicResource RoundedButton}" 
+                        Click="Button_Click" 
+                        Grid.Column="1"/>
+                    <Button 
+                        Content="Tilføj Ny Maskine" 
+                        Command="{Binding OpenProduceMachineWindowCommand}" 
+                        Margin="10,0,0,10" 
+                        Height="50" 
+                        VerticalAlignment="Bottom" 
+                        FontSize="20" 
+                        BorderBrush="#FF476B90" 
+                        Background="#FF8AB2E2" 
+                        Grid.IsSharedSizeScope="True" 
+                        FontFamily="Segoe UI Semibold" 
+                        Template="{DynamicResource RoundedButton}" 
+                        HorizontalAlignment="Left" 
+                        Width="200" 
+                        Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Udlejning" Background="#FF71B1DC">
