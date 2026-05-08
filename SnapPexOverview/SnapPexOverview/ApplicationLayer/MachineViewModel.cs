@@ -30,7 +30,7 @@ namespace SnapPexOverview.ApplicationLayer
 
         public string DisplayMachineNr
         {
-            get => $"{MachineNr}{ProductionReference}";
+            get => $"{ProductionReference}-{MachineNr}";
         }
 
         public MachineStatus Status
