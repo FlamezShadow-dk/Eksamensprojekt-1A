@@ -285,7 +285,7 @@ namespace SnapPexOverview.ApplicationLayer
             get => _productionReference;
             set
             {
-                _productionReference = value;
+                _productionReference = value?.ToUpper() ?? "";
                 OnPropertyChanged();
             }
         }
