@@ -83,21 +83,17 @@
             </TabItem>
             <TabItem Header="Maskine" Background="#FF71DC74">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="47*"/>
-                        <ColumnDefinition Width="727*"/>
-                    </Grid.ColumnDefinitions>
                     <TextBox Text="Søg maskine"
                              Height="19"
                              VerticalAlignment="Top"
                              BorderBrush="#FFB3B3B3"
-                             Background="#FFB3B3B3" Grid.ColumnSpan="2"/>
+                             Background="#FFB3B3B3"/>
 
                     <ListView ItemsSource="{Binding Machines}"
                               Margin="0,20,0,70"
                               Foreground="Black"
                               BorderBrush="Transparent"
-                              Background="#FFEDEDED" Grid.ColumnSpan="2">
+                              Background="#FFEDEDED">
 
                         <ListView.View>
                             <GridView>
@@ -143,23 +139,152 @@
             </TabItem>
             <TabItem Header="Udlejning" Background="#FF71B1DC">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="8*"/>
-                        <ColumnDefinition Width="379*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Content="Godkend" Margin="0,0,10,10" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="125" FontSize="24" BorderBrush="#FF569047" Background="#FF9DE28A" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}" Grid.Column="1"/>
+                    <TextBox Text="Søg Udlejning"
+                             Height="19"
+                             VerticalAlignment="Top"
+                             BorderBrush="#FFB3B3B3"
+                             Background="#FFB3B3B3"/>
+                    <ListView ItemsSource="{Binding Rental}"
+                              Margin="0,20,0,70"
+                              Foreground="Black"
+                              BorderBrush="Transparent"
+                              Background="#FFEDEDED">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Firma-Navn"
+                                                DisplayMemberBinding="{Binding DisplayRentalCompany}"
+                                                Width="300"/>
+                                <GridViewColumn Header="# Maskiner Lejet"
+                                                DisplayMemberBinding="{Binding NumberOfMachines}" 
+                                                Width="150"/>
+                                <GridViewColumn Header="Udlejning Start"
+                                                DisplayMemberBinding="{Binding RentalPeriodStart}" 
+                                                Width="250"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Button Content="Opdater Udlejning" 
+                            Margin="0,0,10,10" 
+                            Height="50"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Right"
+                            Width="200" FontSize="20"
+                            BorderBrush="#FF569047"
+                            Background="#FF9DE28A"
+                            Grid.IsSharedSizeScope="True"
+                            FontFamily="Segoe UI Semibold"
+                            Template="{DynamicResource RoundedButton}"
+                            Click="Button_Click"
+                            Grid.Column="1"/>
+                    <Button Content="Tilføj Ny Udlejning" 
+                            Margin="10,0,0,10" 
+                            Height="50" 
+                            VerticalAlignment="Bottom" 
+                            FontSize="20" 
+                            BorderBrush="#FF476B90" 
+                            Background="#FF8AB2E2" 
+                            Grid.IsSharedSizeScope="True" 
+                            FontFamily="Segoe UI Semibold" 
+                            Template="{DynamicResource RoundedButton}" 
+                            HorizontalAlignment="Left" 
+                            Width="200" 
+                            Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Skruer" Background="#FFCF71DC">
-                <Grid>
-                    <Label Content="Tilføj Nye Skruer" Margin="262,45,262,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
-                    <Button Content="Godkend" Margin="0,0,10,10" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="125" FontSize="24" BorderBrush="#FF569047" Background="#FF9DE28A" Grid.IsSharedSizeScope="True" FontFamily="Segoe UI Semibold" Template="{DynamicResource RoundedButton}"/>
-                    <CheckBox x:Name="_16mmCheck" Margin="145,130,575,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="_18mmCheck"  Margin="575,130,145,0" VerticalAlignment="Top"/>
-                    <Label Content="16mm Hoved" HorizontalAlignment="Left" Margin="135,220,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold"/>
-                    <Label Content="18mm Hoved" HorizontalAlignment="Left" Margin="565,220,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold"/>
-                    <Label Content="Hvor Mange Nye?" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top" Width="114" FontWeight="Bold"/>
-                    <TextBox x:Name="ComponentSearch_Copy" TextWrapping="Wrap" BorderBrush="#FF787878" Background="#FFE2E2E2" SelectionOpacity="1" Height="19" VerticalAlignment="Top" Margin="262,280,262,0"/>
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Tilføj Nye Skruer" 
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="30" 
+                           FontWeight="Bold"
+                           Grid.ColumnSpan="2"
+                           Height="50"/>
+
+                    <Border Background="#FFDFDFDF"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Height="120"
+                            Width="120"/>
+                    <CheckBox x:Name="_16mmCheck"
+                              VerticalAlignment="Top"
+                              Margin="20,5,0,0"
+                              Grid.Row="1"
+                              Grid.Column="0" 
+                              Grid.ColumnSpan="2" 
+                              Height="15"/>
+                    <Label Content="16mm Hoved" 
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Width="100" 
+                           FontWeight="Bold"
+                           Grid.Row="2" Height="26"/>
+
+
+                    <Border Background="#FFDFDFDF"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Height="120"
+                            Width="120"/>
+                    <CheckBox x:Name="_18mmCheck"
+                              VerticalAlignment="Top"
+                              Margin="20,5,0,0"
+                              Grid.Row="1"
+                              Grid.Column="1" Height="15"/>
+                    <Label Content="18mm Hoved" 
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" 
+                           Width="100" 
+                           FontWeight="Bold"
+                           Grid.Row="2"
+                           Grid.Column="1" Height="26"/>
+
+                    <Label Content="Hvor Mange Nye?" 
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Width="114"
+                           FontWeight="Bold"
+                           Grid.Row="3"
+                           Grid.ColumnSpan="2" 
+                           Height="30"/>
+
+                    <TextBox x:Name="ScrewSearch"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center" 
+                             TextWrapping="Wrap" 
+                             BorderBrush="#FF787878" 
+                             Background="#FFE2E2E2"
+                             Height="20"
+                             MinWidth="150"
+                             Grid.Row="4"
+                             Grid.ColumnSpan="2"/>
+
+                    <Button Content="Godkend"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Height="50"
+                            Width="125" 
+                            FontSize="24" 
+                            BorderBrush="#FF569047" 
+                            Background="#FF9DE28A" 
+                            Grid.IsSharedSizeScope="True" 
+                            FontFamily="Segoe UI Semibold" 
+                            Template="{DynamicResource RoundedButton}"
+                            Grid.Row="5"
+                            Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
         </TabControl>

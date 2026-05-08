@@ -5,54 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnapPexOverview.UILayer"
         mc:Ignorable="d"
-        Title="ProduceMachineWindow" Height="450" Width="800">
-    <Grid Margin="20">
+        Title="ProduceMachineWindow" Height="400" Width="400">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- header? -->
-        <TextBlock Grid.Row="0"
-                   Text="Produktion af maskiner"
-                   FontSize="20"
-                   FontWeight="Bold"
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,20"/>
-        
-        <!-- input stuff-->
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
+        <!-- Header -->
+        <TextBlock
+            Grid.ColumnSpan="2"
+            Text="Produktion af Maskiner"
+            FontSize="20"
+            FontWeight="Bold"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" 
+            Height="30"/>
 
-            <TextBlock Text="Antal maskiner:"
-                       VerticalAlignment="Center"
-                       Margin="0,0,10,0"/>
+        <!-- Input Fields -->
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   Text="Antal maskiner:"
+                   VerticalAlignment="Center"
+                   Margin="0,0,6,0" Height="16"/>
+        <TextBox Grid.Row="2"
+                 Grid.Column="1"
+                 Margin="5,10,5,10"
+                 Text="{Binding MachineAmountToProduce, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBox Width="120"
-                     Text="{Binding MachineAmountToProduce, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="2"
-            Orientation="Horizontal"
-            HorizontalAlignment="Center">
-
-            <TextBlock Text="Produktion reference:"
-               VerticalAlignment="Center"
-               Margin="0,0,10,0"/>
-
-            <TextBox Width="120"
-             Text="{Binding ProductionReference, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   Text="Produktion reference:"
+                   VerticalAlignment="Center"
+                   Margin="0,0,6,0" Height="16"/>
+        <ComboBox Grid.Row="3"
+                  Grid.Column="1"
+                  Margin="5,10,5,10"
+                  Text="{Binding ProductionReference, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- buttons-->
-        <StackPanel Grid.Row="4"
+        <StackPanel Grid.Row="5"
+                    Grid.ColumnSpan="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
-                    Margin="0,20,0,0">
+                    Width="200">
             <Button Content="Annuller"
                     Width="90"
                     Margin="5"
