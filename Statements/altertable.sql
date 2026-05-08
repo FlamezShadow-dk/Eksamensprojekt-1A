@@ -11,17 +11,24 @@ ALTER PROCEDURE spInsertComponent
 	@AmountInStock INT,
 	@ImagePath NVARCHAR(255)
 AS
-BEGINs
+BEGIN
 	INSERT INTO COMPONENT(ComponentName, AmountPerMachine, AmountInStock, ImagePath)
 	VALUES(@ComponentName, @AmountPerMachine, @AmountInStock, @ImagePath);
 END
 GO
 
+ALTER TABLE Machine
+ADD ProductionReference NVARCHAR(10) NOT NULL
+DEFAULT '';
+GO
+
 ALTER PROCEDURE spInsertMachine
-	@MachineStatus INT
+	@MachineStatus INT,
+	@ProductionReference NVARCHAR(10)
 AS
 BEGIN
-	INSERT INTO MACHINE(MachineStatus)
-	VALUES(@MachineStatus)
+	INSERT INTO MACHINE(MachineStatus, ProductionReference)
+	VALUES(@MachineStatus, @ProductionReference)
 	SELECT SCOPE_IDENTITY()
 END
+GO

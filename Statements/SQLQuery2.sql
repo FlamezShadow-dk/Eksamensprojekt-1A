@@ -3,6 +3,7 @@ GO
 
 CREATE TABLE MACHINE (
 	MachineNr INT IDENTITY(1,1) PRIMARY KEY,
+	ProductionReference NVARCHAR(10) NOT NULL,
 	MachineStatus INT NOT NULL
 );
 GO
