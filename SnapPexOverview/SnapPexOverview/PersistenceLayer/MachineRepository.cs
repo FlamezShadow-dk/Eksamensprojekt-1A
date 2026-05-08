@@ -26,7 +26,9 @@ namespace SnapPexOverview.PersistenceLayer
             using (SqlCommand cmd = new SqlCommand("spInsertMachine", con))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProductReference", machine.ProductReference);
                 cmd.Parameters.AddWithValue("@MachineStatus", (int)machine.Status);
+
                 result = Convert.ToInt32(cmd.ExecuteScalar());
             }
             return result;
@@ -45,6 +47,7 @@ namespace SnapPexOverview.PersistenceLayer
                     {
                         int nr = Convert.ToInt32(reader["MachineNr"]);
                         Machine machine = new Machine(nr);
+                        machine.ProductReference = reader["ProductReference"].ToString();
                         machine.Status = (MachineStatus)(int)reader["MachineStatus"];
 
                         machines.Add(machine);
@@ -69,7 +72,7 @@ namespace SnapPexOverview.PersistenceLayer
                     {
                         int nr = Convert.ToInt32(reader["MachineNr"]);
                         Machine machine = new Machine(nr);
-
+                        machine.ProductReference = reader["ProductReference"].ToString();
                         machine.Status = (MachineStatus)(int)reader["MachineStatus"];
                         result = machine;
                     }
@@ -82,10 +85,12 @@ namespace SnapPexOverview.PersistenceLayer
         {
             using (SqlConnection con = CreateConnection())
             using (SqlCommand cmd = new SqlCommand("UPDATE MACHINE SET " +
-                "MachineStatus = @MachineStatus " +
+                "MachineStatus = @MachineStatus, " +
+                "ProductReference = @ProductReference" +
                 "WHERE MachineNr = @machineNr;", con))
             {
                 cmd.Parameters.AddWithValue("@MachineStatus", (int)machine.Status);
+                cmd.Parameters.AddWithValue("@ProductReference", machine.ProductReference);
                 cmd.Parameters.AddWithValue("@machineNr", machine.MachineNr);
                 cmd.ExecuteNonQuery();
             }
