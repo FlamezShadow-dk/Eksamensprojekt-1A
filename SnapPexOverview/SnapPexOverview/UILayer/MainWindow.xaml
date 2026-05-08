@@ -102,7 +102,7 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Maskin Nr"
-                                                DisplayMemberBinding="{Binding MachineNr}" 
+                                                DisplayMemberBinding="{Binding DisplayMachineNr}" 
                                                 Width="250"/>
                                 <GridViewColumn Header="Status"
                                                 DisplayMemberBinding="{Binding StatusText}" 

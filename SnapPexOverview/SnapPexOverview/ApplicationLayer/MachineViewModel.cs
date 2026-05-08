@@ -18,11 +18,19 @@ namespace SnapPexOverview.ApplicationLayer
                 OnPropertyChanged();
             }
         }
-       private string _productReference; 
-        public string ProductReference
+        public string ProductionReference
         {
-            get => _productReference;
+            get => _machine.ProductionReference;
+            set
+            {
+                _machine.ProductionReference = value;
+                OnPropertyChanged();
+            }
+        }
 
+        public string DisplayMachineNr
+        {
+            get => $"{MachineNr}{ProductionReference}";
         }
 
         public MachineStatus Status

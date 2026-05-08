@@ -14,7 +14,7 @@ namespace SnapPexOverview.DomainLayer
     public class Machine
     {
         public int MachineNr { get; set; }
-        public string ProductReference { get; set; }
+        public string ProductionReference { get; set; }
         public MachineStatus Status { get; set; }
 
         public Machine (int machineNr)

@@ -214,7 +214,7 @@ namespace SnapPexOverview.ApplicationLayer
         }
 
         // machine stuff
-        public void ProduceMachines(int amount)
+        public void ProduceMachines(int amount, string productionReference)
         {
             string compNames = "";
             foreach (ComponentViewModel comp in Components)
@@ -258,7 +258,8 @@ namespace SnapPexOverview.ApplicationLayer
             {
                 Machine machine = new Machine(0)
                 {
-                    Status = MachineStatus.InStock
+                    Status = MachineStatus.InStock,
+                    ProductionReference = productionReference
                 };
 
                 int newMachineNr = _machineRepo.Add(machine);
@@ -278,6 +279,15 @@ namespace SnapPexOverview.ApplicationLayer
             }
         }
 
+        private string _productionReference = "";
+        public string ProductionReference
+        {
+            get => _productionReference;
+            set
+            {
+                _productionReference = value;
+                OnPropertyChanged();
+            }
+        }
     }
-
 }

@@ -25,7 +25,7 @@ namespace SnapPexOverview.ApplicationLayer.Commands
 
             if (window.ShowDialog() == true)
             {
-                mvm.ProduceMachines(mvm.MachineAmountToProduce);
+                mvm.ProduceMachines(mvm.MachineAmountToProduce, mvm.ProductionReference);
             }
         }
     }
