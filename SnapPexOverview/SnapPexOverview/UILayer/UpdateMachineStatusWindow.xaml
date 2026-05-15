@@ -1,0 +1,72 @@
+﻿<Window x:Class="SnapPexOverview.UILayer.UpdateMachineStatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SnapPexOverview.UILayer"
+        mc:Ignorable="d"
+        Title="UpdateMachineStatusWindow" Height="400" Width="400">
+    <Grid
+          Margin="20"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="180"/>
+        </Grid.ColumnDefinitions>
+
+        <!--machinenr-->
+        <TextBlock Text="Maskine:"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Margin="0,5"
+                   VerticalAlignment="Center"/>
+        
+        <TextBox Grid.Row="0"
+                 Grid.Column="1"
+                 Margin="10"
+                 Text="{Binding SelectedMachine.DisplayMachineNr, Mode=OneWay}"
+                 IsReadOnly="True"
+                 Focusable="False"
+                 Background="#FFE0E0E0"/>
+        
+        <!--machinestatus-->
+        <TextBlock Text="Ny Status:"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="0,5"
+                   VerticalAlignment="Center"/>
+
+        <ComboBox x:Name="StatusComboBox"
+                  Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="10"
+                  Background="#FFE0E0E0"
+                  ItemsSource="{Binding MachineStatuses}"
+                  SelectedItem="{Binding SelectedMachineStatus}"/>
+        
+        <!--buttons-->
+        <Button Content="Annuller"
+                Grid.Row="2"
+                Width="80"
+                Margin="0,20,0,0"
+                IsCancel="True"
+                Background="#FFE09595"/>
+
+        <Button Content="Gem"
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="80"
+                Margin="0,20,0,0"
+                HorizontalAlignment="Right"
+                IsDefault="True"
+                Click="OnConfirmClick"
+                Background="#FFA9E095"/>
+    </Grid>
+</Window>

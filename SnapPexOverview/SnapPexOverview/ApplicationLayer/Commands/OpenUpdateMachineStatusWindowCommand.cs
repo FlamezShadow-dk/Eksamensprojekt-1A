@@ -1,18 +1,18 @@
 ﻿using SnapPexOverview.UILayer;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
-using System.Windows;
 using System.Windows.Input;
 
 namespace SnapPexOverview.ApplicationLayer.Commands
 {
-    public class OpenProduceMachineWindowCommand : ICommand
+    public class OpenUpdateMachineStatusWindowCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         private readonly MainViewModel mvm;
 
-        public OpenProduceMachineWindowCommand(MainViewModel mainViewModel)
+        public OpenUpdateMachineStatusWindowCommand(MainViewModel mainViewModel)
         {
             mvm = mainViewModel;
         }
@@ -21,13 +21,14 @@ namespace SnapPexOverview.ApplicationLayer.Commands
 
         public void Execute(object? parameter)
         {
-            ProduceMachineWindow window = new ProduceMachineWindow();
+            UpdateMachineStatusWindow window = new UpdateMachineStatusWindow();
             window.DataContext = mvm;
 
             if (window.ShowDialog() == true)
             {
-                mvm.ProduceMachines(mvm.MachineAmountToProduce, mvm.ProductionReference);
+                mvm.UpdateMachineStatus(mvm.SelectedMachineStatus);
             }
         }
+
     }
 }

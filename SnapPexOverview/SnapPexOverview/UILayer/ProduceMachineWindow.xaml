@@ -10,10 +10,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <!-- header? -->
         <TextBlock Grid.Row="0"
                    Text="Produktion af maskiner"
@@ -34,9 +35,21 @@
             <TextBox Width="120"
                      Text="{Binding MachineAmountToProduce, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-        
+
+        <StackPanel Grid.Row="2"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
+
+            <TextBlock Text="Produktion reference:"
+               VerticalAlignment="Center"
+               Margin="0,0,10,0"/>
+
+            <TextBox Width="120"
+             Text="{Binding ProductionReference, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
         <!-- buttons-->
-        <StackPanel Grid.Row="3"
+        <StackPanel Grid.Row="4"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Margin="0,20,0,0">

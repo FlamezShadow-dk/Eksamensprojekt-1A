@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-using SnapPexOverview.ApplicationLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -15,21 +13,18 @@ using System.Windows.Shapes;
 namespace SnapPexOverview.UILayer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UpdateMachineStatusWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UpdateMachineStatusWindow : Window
     {
-        MainViewModel mvm = new MainViewModel();
-
-        public MainWindow()
+        public UpdateMachineStatusWindow()
         {
             InitializeComponent();
-            this.DataContext = mvm;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnConfirmClick(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = true;
         }
     }
 }
