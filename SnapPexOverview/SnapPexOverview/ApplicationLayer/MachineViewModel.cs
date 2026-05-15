@@ -25,6 +25,7 @@ namespace SnapPexOverview.ApplicationLayer
             {
                 _machine.ProductionReference = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(DisplayMachineNr));
             }
         }
 
@@ -40,6 +41,7 @@ namespace SnapPexOverview.ApplicationLayer
             {
                 _machine.Status = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(StatusText));
             }
         }
 

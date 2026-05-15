@@ -86,7 +86,7 @@ namespace SnapPexOverview.PersistenceLayer
             using (SqlConnection con = CreateConnection())
             using (SqlCommand cmd = new SqlCommand("UPDATE MACHINE SET " +
                 "MachineStatus = @MachineStatus, " +
-                "ProductionReference = @ProductionReference" +
+                "ProductionReference = @ProductionReference " +
                 "WHERE MachineNr = @machineNr;", con))
             {
                 cmd.Parameters.AddWithValue("@MachineStatus", (int)machine.Status);

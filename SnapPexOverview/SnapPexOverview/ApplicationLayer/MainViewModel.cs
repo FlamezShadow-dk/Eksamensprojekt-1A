@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
@@ -37,6 +38,8 @@ namespace SnapPexOverview.ApplicationLayer
 
         public ICommand OpenProduceMachineWindowCommand { get; }
 
+        public ICommand OpenUpdateMachineStatusWindowCommand { get; }
+
         public MainViewModel()
         {
             // instantiate repository (dependency)
@@ -55,6 +58,8 @@ namespace SnapPexOverview.ApplicationLayer
             OpenUpdateComponentWindowCommand = new OpenUpdateComponentWindowCommand(this);
 
             OpenProduceMachineWindowCommand = new OpenProduceMachineWindowCommand(this);
+
+            OpenUpdateMachineStatusWindowCommand = new OpenUpdateMachineStatusWindowCommand(this);
         }
         
         public void UpdateComponent(string name, int perMachine, string imagePath)
@@ -288,6 +293,65 @@ namespace SnapPexOverview.ApplicationLayer
                 _productionReference = value?.ToUpper() ?? "";
                 OnPropertyChanged();
             }
+        }
+
+        //machine status stuff
+        private MachineViewModel _selectedMachine;
+        public MachineViewModel SelectedMachine
+        {
+            get => _selectedMachine;
+            set
+            {
+                _selectedMachine = value;
+                OnPropertyChanged();
+
+                if (value != null)
+                {
+                    SelectedMachineStatus = value.StatusText;
+                }
+            }
+        }
+
+        private string _selectedMachineStatus;
+        public string SelectedMachineStatus
+        {
+            get => _selectedMachineStatus;
+            set
+            {
+                _selectedMachineStatus = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> MachineStatuses { get; } = new()
+        {
+            "På Lager",
+            "Udlejet",
+            "Reparation"
+        };
+
+        public void UpdateMachineStatus(string statusText)
+        {
+            MachineStatus newStatus = statusText switch
+            {
+                "På Lager" => MachineStatus.InStock,
+                "Udlejet" => MachineStatus.RentedOut,
+                "Reparation" => MachineStatus.Repair,
+                _ => MachineStatus.InStock //default case prevents crash
+            };
+
+            // update machineviewmodel
+            SelectedMachine.Status = newStatus;
+
+            // make updated domain obj
+            Machine updated = new Machine(SelectedMachine.MachineNr)
+            {
+                Status = newStatus,
+                ProductionReference = SelectedMachine.ProductionReference
+            };
+
+            // update db
+            _machineRepo.Update(updated);
         }
     }
 }
