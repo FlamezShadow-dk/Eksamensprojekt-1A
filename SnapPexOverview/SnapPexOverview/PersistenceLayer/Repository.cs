@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace SnapPexOverview.PersistenceLayer
 {
-    public class Repository
+    public abstract class Repository
     {
         protected string ConnectionString;
 
