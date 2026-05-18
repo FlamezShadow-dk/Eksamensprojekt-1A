@@ -43,9 +43,7 @@ namespace SnapPexOverview.ServiceLayer
                 ImagePath = imagePath
             };
 
-            // add it to database & wrap it
             _componentRepo.Add(comp);
-
             _components.Add(comp);
         }
 
