@@ -1,4 +1,5 @@
-﻿using SnapPexOverview.UILayer;
+﻿using SnapPexOverview.ApplicationLayer.ViewModels;
+using SnapPexOverview.UILayer;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ObjectiveC;

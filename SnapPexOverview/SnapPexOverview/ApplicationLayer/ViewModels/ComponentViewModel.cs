@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SnapPexOverview.ApplicationLayer
+namespace SnapPexOverview.ApplicationLayer.ViewModels
 {
     public class ComponentViewModel : BaseViewModel
     {

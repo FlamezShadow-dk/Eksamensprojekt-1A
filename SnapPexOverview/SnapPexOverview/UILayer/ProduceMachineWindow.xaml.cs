@@ -1,4 +1,4 @@
-﻿using SnapPexOverview.ApplicationLayer;
+﻿using SnapPexOverview.ApplicationLayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace SnapPexOverview.ApplicationLayer
+namespace SnapPexOverview.ApplicationLayer.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {

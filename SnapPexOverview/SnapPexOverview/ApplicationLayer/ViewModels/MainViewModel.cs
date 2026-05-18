@@ -1,6 +1,7 @@
 ﻿using SnapPexOverview.ApplicationLayer.Commands;
 using SnapPexOverview.DomainLayer;
 using SnapPexOverview.PersistenceLayer;
+using SnapPexOverview.ServiceLayer;
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -9,13 +10,13 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
-namespace SnapPexOverview.ApplicationLayer
+namespace SnapPexOverview.ApplicationLayer.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
         // repository references
-        private readonly ComponentRepository _componentRepo;
-        private readonly MachineRepository _machineRepo;
+        private readonly ComponentService _componentService;
+        private readonly MachineService _machineService;
 
         // observable collection for inotify
         private ObservableCollection<ComponentViewModel> _components = new();
@@ -42,15 +43,20 @@ namespace SnapPexOverview.ApplicationLayer
 
         public MainViewModel()
         {
-            // instantiate repository (dependency)
-            _componentRepo = new ComponentRepository();
-            _machineRepo = new MachineRepository();
+            //repositories
+            ComponentRepository componentRepo = new ComponentRepository();
+            MachineRepository machineRepo = new MachineRepository();
 
-            // populate observable collection and wrap domain objects
-            foreach (Component component in _componentRepo.GetAll())
-                Components.Add(new ComponentViewModel(component));
-            foreach (Machine machine in _machineRepo.GetAll())
-                Machines.Add(new MachineViewModel(machine));
+            //services
+            _componentService = new ComponentService(componentRepo);
+            _machineService = new MachineService(machineRepo, componentRepo);
+
+            // populate collections from services
+            foreach (Component comp in _componentService.Components)
+                Components.Add(new ComponentViewModel(comp));
+            foreach (Machine mach in _machineService.Machines)
+                Machines.Add(new MachineViewModel(mach));
+            
 
             // instantiate commands
             OpenAddComponentWindowCommand = new OpenAddComponentWindowCommand(this);
@@ -64,63 +70,43 @@ namespace SnapPexOverview.ApplicationLayer
         
         public void UpdateComponent(string name, int perMachine, string imagePath)
         {
-            // checks db for component
-            Component existing = _componentRepo.GetByName(name);
-            // try find matching viewmodel in UI list (returns null if not found)
-            ComponentViewModel vm = Components.FirstOrDefault(c => c.ComponentName == name);
-
-            if (existing != null)
+            try
             {
-                //updates perMachine and inStock if component already added
-                existing.AmountPerMachine = perMachine;
-                existing.AmountInStock += AmountToAdd;
+                _componentService.UpdateComponent(name, perMachine, AmountToAdd, imagePath);
+                Components.Clear();
 
-                if (!string.IsNullOrEmpty(imagePath))
+                foreach (Component comp in _componentService.Components)
                 {
-                    existing.ImagePath = imagePath;
+                    Components.Add(new ComponentViewModel(comp));
                 }
-
-                _componentRepo.Update(existing);
-
-                if (vm != null)
-                {
-                    vm.AmountInStock = existing.AmountInStock;
-                    vm.AmountPerMachine = existing.AmountPerMachine;
-
-                    if (!string.IsNullOrEmpty(imagePath))
-                    {
-                        vm.ImagePath = imagePath;
-                    }
-                }
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Component Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
             }
         }
 
         public void AddComponent(string name, int perMachine, int inStock, string imagePath)
         {
-            // checks db for component
-            Component existing = _componentRepo.GetByName(name);
+            try
+            {
+                _componentService.AddComponent(name, perMachine, inStock, imagePath);
+                Components.Clear();
 
-            if (existing != null)
-            {
-                MessageBox.Show(
-                        $"Komponent: {existing.ComponentName} eksistere allerede",
-                        "Component Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
-                return;
-            }
-            else
-            {
-                Component comp = new Component
+                foreach (Component comp in _componentService.Components)
                 {
-                    ComponentName = name,
-                    AmountPerMachine = perMachine,
-                    AmountInStock = inStock,
-                    ImagePath = imagePath
-                };
-                // add it to database & wrap it
-                _componentRepo.Add(comp);
-                Components.Add(new ComponentViewModel(comp));
+                    Components.Add(new ComponentViewModel(comp));
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Component Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
             }
         }
 
@@ -221,55 +207,40 @@ namespace SnapPexOverview.ApplicationLayer
         // machine stuff
         public void ProduceMachines(int amount, string productionReference)
         {
-            string compNames = "";
-            foreach (ComponentViewModel comp in Components)
+            try
             {
-                // validation
-                int required = comp.AmountPerMachine * amount;
-                if (comp.AmountInStock < required)
+                ObservableCollection<Component> domainComponents = new();
+
+                foreach(ComponentViewModel vm in Components)
                 {
-                    compNames += $"{comp.ComponentName}\n";
+                    domainComponents.Add(new Component
+                    {
+                        ComponentName = vm.ComponentName,
+                        AmountPerMachine = vm.AmountPerMachine,
+                        AmountInStock = vm.AmountInStock,
+                        ImagePath = vm.ImagePath
+                    });
+                }
+                _machineService.ProduceMachines(amount, productionReference, domainComponents);
+                Components.Clear();
+
+                foreach(Component comp in domainComponents)
+                {
+                    Components.Add(new ComponentViewModel(comp));
+                }
+                Machines.Clear();
+
+                foreach (Machine machine in _machineService.Machines)
+                {
+                    Machines.Add(new MachineViewModel(machine));
                 }
             }
-
-            if (!string.IsNullOrWhiteSpace(compNames))
+            catch (ArgumentException ex)
             {
-                MessageBox.Show(
-                        $"Ikke nok antal af:\n\n{compNames}",
-                        "Production Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
-                return;
-            }
-
-            foreach (ComponentViewModel comp in Components)
-            {
-                // update viewmodel
-                comp.AmountInStock -= comp.AmountPerMachine * amount;
-
-                // db update
-                Component updated = new Component
-                {
-                    ComponentName = comp.ComponentName,
-                    AmountPerMachine = comp.AmountPerMachine,
-                    AmountInStock = comp.AmountInStock,
-                    ImagePath = comp.ImagePath
-                };
-                _componentRepo.Update(updated);
-            }
-
-            // create machine
-            for (int i = 0; i < amount; i++)
-            {
-                Machine machine = new Machine(0)
-                {
-                    Status = MachineStatus.InStock,
-                    ProductionReference = productionReference
-                };
-
-                int newMachineNr = _machineRepo.Add(machine);
-                machine.MachineNr = newMachineNr;
-                Machines.Add(new MachineViewModel(machine));
+                MessageBox.Show(ex.Message,
+                    "Production Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
             }
         }
 
@@ -332,26 +303,15 @@ namespace SnapPexOverview.ApplicationLayer
 
         public void UpdateMachineStatus(string statusText)
         {
-            MachineStatus newStatus = statusText switch
+            Machine domainMachine = new Machine(SelectedMachine.MachineNr)
             {
-                "På Lager" => MachineStatus.InStock,
-                "Udlejet" => MachineStatus.RentedOut,
-                "Reparation" => MachineStatus.Repair,
-                _ => MachineStatus.InStock //default case prevents crash
-            };
-
-            // update machineviewmodel
-            SelectedMachine.Status = newStatus;
-
-            // make updated domain obj
-            Machine updated = new Machine(SelectedMachine.MachineNr)
-            {
-                Status = newStatus,
+                Status = SelectedMachine.Status,
                 ProductionReference = SelectedMachine.ProductionReference
             };
 
-            // update db
-            _machineRepo.Update(updated);
+            _machineService.UpdateMachineStatus(domainMachine, statusText);
+
+            SelectedMachine.Status = domainMachine.Status;
         }
     }
 }
